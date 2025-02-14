@@ -12,8 +12,14 @@ export default {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                
             },
+            colors: {
+                'red-200': '#FFC6C6',
+                'red-300': '#FF8484',
+                'red-500': '#FA0000',
+                'red-700': '#B30000',
+              },
         },
     },
     plugins: [],

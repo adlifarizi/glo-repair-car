@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    html, body {
+        background: #FBFBFB !important;
+    }
+  }
+
+.home-background {
+    background-image: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+        url('https://images.squarespace-cdn.com/content/v1/5c6dcbf5f4755a48d74da555/1566361112664-1HH140I24PNJ60MQ0YKE/auto+repair+shop+houston+tx.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
