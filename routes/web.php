@@ -19,6 +19,10 @@ Route::get('/kontak', function () {
     return view('main.index');
 });
 
-Route::get('/dashboard', function () {
+Route::get('/login', function () {
     return view('admin.index');
+});
+
+Route::get('/dashboard', function () {
+    return view('admin.dashboard');
 });
