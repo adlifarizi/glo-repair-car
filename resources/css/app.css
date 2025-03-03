@@ -3,17 +3,59 @@
 @tailwind utilities;
 
 @layer base {
-    html, body {
+
+    html,
+    body {
+        font-family: 'Poppins', sans-serif !important;
         background: #FBFBFB !important;
     }
-  }
+}
 
-.home-background {
-    background-image: 
-        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
-        url('https://images.squarespace-cdn.com/content/v1/5c6dcbf5f4755a48d74da555/1566361112664-1HH140I24PNJ60MQ0YKE/auto+repair+shop+houston+tx.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
-  
+.progress {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background: none;
+    border: 0;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    pointer-events: none;
+
+    progress {
+        position: relative;
+        display: block;
+        height: 20px;
+        width: 100%;
+        border: 0;
+        background-color: transparent;
+        -webkit-appearance: none;
+    }
+
+    ::-moz-progress-bar {
+        background-image: linear-gradient(60deg, #f27121, #e94057, #8a2387);
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    ::-webkit-progress-bar {
+        background-color: transparent;
+    }
+
+    ::-webkit-progress-value {
+        background-image: linear-gradient(132deg, #F4D03F 0%, #16A085 100%);
+        border-top-left-radius: 6px;
+        border-top-right-radius: 6px;
+    }
+
+    .animal {
+        position: absolute;
+        display: block;
+        top: -1.8rem;
+        left: calc(var(--move) - 2.3rem);
+        transform: scaleX(-1);
+        font-size: 4rem;
+        z-index: 1;
+    }
+
+}

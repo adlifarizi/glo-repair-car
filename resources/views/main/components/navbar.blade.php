@@ -6,26 +6,26 @@
             <div class="hidden md:block">
                 <div class="ml-10 flex items-baseline space-x-4">
                     <a href="{{ url('/') }}"
-                        class="{{ request()->is('/') ? 'text-red-500 font-bold' : 'text-white font-medium  hover:text-red-500' }} px-3 py-2 rounded-md text-base transition-colors duration-200">
+                        class="{{ request()->is('/') ? 'text-red-500' : 'text-white hover:text-red-500' }} font-medium px-3 py-2 rounded-md text-base transition-colors duration-200">
                         Beranda
                     </a>
                     <a href="{{ url('layanan') }}"
-                        class="{{ request()->is('layanan') ? 'text-red-500 font-bold' : 'text-white font-medium  hover:text-red-500' }} px-3 py-2 rounded-md text-base transition-colors duration-200">
+                        class="{{ request()->is('layanan') ? 'text-red-500' : 'text-white hover:text-red-500' }} font-medium px-3 py-2 rounded-md text-base transition-colors duration-200">
                         Layanan
                     </a>
                     <a href="{{ url('ulasan') }}"
-                        class="{{ request()->is('ulasan') ? 'text-red-500 font-bold' : 'text-white font-medium  hover:text-red-500' }} px-3 py-2 rounded-md text-base transition-colors duration-200">
+                        class="{{ request()->is('ulasan') ? 'text-red-500' : 'text-white hover:text-red-500' }} font-medium px-3 py-2 rounded-md text-base transition-colors duration-200">
                         Ulasan
                     </a>
                     <a href="{{ url('kontak') }}"
-                        class="{{ request()->is('kontak') ? 'text-red-500 font-bold' : 'text-white font-medium  hover:text-red-500' }} px-3 py-2 rounded-md text-base transition-colors duration-200">
+                        class="{{ request()->is('kontak') ? 'text-red-500' : 'text-white hover:text-red-500' }} font-medium px-3 py-2 rounded-md text-base transition-colors duration-200">
                         Kontak
                     </a>
                 </div>
             </div>
 
             <!-- Mobile menu button -->
-            <div class="md:hidden">
+            <div class="md:hidden ">
                 <button type="button" onclick="toggleMobileMenu()"
                     class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-red-500 focus:outline-none">
                     <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">

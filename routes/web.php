@@ -8,7 +8,7 @@ Route::get('/', function () {
 });
 
 Route::get('/layanan', function () {
-    return view('main.index');
+    return view('main.layanan');
 });
 
 Route::get('/ulasan', function () {
@@ -16,7 +16,7 @@ Route::get('/ulasan', function () {
 });
 
 Route::get('/kontak', function () {
-    return view('main.index');
+    return view('main.kontak');
 });
 
 Route::get('/dashboard', function () {
