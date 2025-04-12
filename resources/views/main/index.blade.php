@@ -7,7 +7,7 @@
         <!-- Hero -->
         <section class="flex justify-center items-center bg-hero-image bg-cover h-72 md:h-96">
             <div class="flex flex-col gap-12 justify-center items-center">
-                <h1 class="text-3xl md:text-4xl font-bold text-white text-center">
+                <h1 class="text-xl md:text-4xl font-bold text-white text-center">
                     Perbaiki Mobil Anda<br>dengan Profesionalisme Terbaik
                 </h1>
 
@@ -196,7 +196,6 @@
                                 viverra feugiat aliquam.
                             </p>
                             <p class="text-base font-bold text-center text-black">Cynthia Octavania</p>
-                            <p class="text-base font-medium text-center text-red-700">Konsumen</p>
                         </div>
 
                         <div
@@ -213,7 +212,6 @@
                                 viverra feugiat aliquam.
                             </p>
                             <p class="text-base font-bold text-center text-black">John Doe</p>
-                            <p class="text-base font-medium text-center text-red-700">Konsumen</p>
                         </div>
 
                         <div
@@ -230,7 +228,6 @@
                                 viverra feugiat aliquam.
                             </p>
                             <p class="text-base font-bold text-center text-black">Jane Smith</p>
-                            <p class="text-base font-medium text-center text-red-700">Konsumen</p>
                         </div>
                     </div>
                 </div>
@@ -253,10 +250,6 @@
         </section>
 
     </div>
-
-    @push('scripts')
-        <script src="{{ asset('js/progress-tracker.js') }}"></script>
-    @endpush
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {

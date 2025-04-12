@@ -1,64 +1,82 @@
-<div x-data="progressBar()" class="w-full text-center px-12 py-8">
-    <div class="relative flex items-center justify-between">
-        <!-- Progress bar background -->
-        <div class="absolute top-1/2 w-full h-4 bg-gray-300 rounded-full"></div>
+<div class="w-full flex flex-col md:flex-row gap-8">
+    <!-- Kartu Status Antrian -->
+    <div class="bg-white rounded-lg ring-2 ring-gray-200 p-3 flex-1">
+        <h2 class="text-gray-700 font-medium mb-4">3 Maret 2025, 09.34</h2>
 
-        <!-- Progress bar fill -->
-        <div class="absolute top-1/2 left-0 h-4 bg-green-500 rounded-full transition-all duration-1000" :style="'width: ' + progress + '%'" style="max-width: 100%;">
+        <!-- component -->
+        <div class="max-w-xl mx-auto flex flex-col items-start">
+            <!-- Step 1 -->
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-green-600 rounded-lg text-white flex items-center justify-center">
+                    <i class="fa fa-check text-xl"></i>
+                </div>
+                <div class="ml-4 font-medium text-green-600">Dalam Antrian</div>
+            </div>
+
+            <!-- Connector -->
+            <div class="h-10 w-1 my-2 bg-gray-300 mx-4 relative">
+                <div class="absolute left-0 top-0 w-1 bg-green-600" style="height: 0%;"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="flex items-center">
+                <div class="w-10 h-10 bg-gray-300 rounded-lg text-white flex items-center justify-center">
+                    <i class="fa fa-check text-xl"></i>
+                </div>
+                <div class="ml-4 font-medium text-gray-500">Sedang Diperbaiki</div>
+            </div>
+
+            <!-- Connector -->
+            <div class="h-10 w-1 my-2 bg-gray-300 mx-4 relative">
+                <div class="absolute left-0 top-0 w-1 bg-green-600" style="height: 0%;"></div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="flex items-center">
+                <div
+                    class="w-10 h-10 bg-gray-300 rounded-lg text-white flex items-center justify-center">
+                    <i class="fa fa-check text-xl"></i>
+                </div>
+                <div class="ml-4 font-medium text-gray-500">Selesai</div>
+            </div>
         </div>
 
-        <!-- Mobil dengan posisi yang disesuaikan -->
-        <div class="absolute top-[60%] transform -translate-x-1/2 -translate-y-1/2 transition-all duration-1000"
-            :style="getCarPosition()">
-            <img src="{{ asset('icons/car.svg') }}" class="w-24 h-24">
+    </div>
+
+    <!-- Kartu Informasi Servis -->
+    <div class="bg-white rounded-lg ring-2 ring-gray-200 p-3 flex-1">
+        <div class="flex relative justify-between">
+            <button class="w-full text-red-500 font-medium px-4 py-2 border-b-2 border-red-500 rounded-t-md">Informasi
+                Servis</button>
+            <button class="w-full text-gray-500 font-medium px-4 py-2 hover:bg-red-100 rounded-t-md">Riwayat Servis</button>
         </div>
 
-        <!-- Checkpoints -->
-        <div class="relative mt-4 z-10 flex w-full justify-between">
-            <!-- Checkpoint 1 -->
-            <div class="relative text-center cursor-pointer" @click="setProgress(0)">
-                <i :class="progress >= 0 ? 'bx bxs-check-square text-green-500 -translate-y-7 transition duration-1000' : 'bx bxs-check-square text-gray-400 translate-y-0 transition duration-1000'"
-                    class="text-4xl block transform"></i>
-                <p :class="progress >= 0 ? 'text-green-500' : 'text-gray-400'" class="mt-2">Dalam Antrian</p>
+        <div class="py-4">
+            <div class="flex items-center mb-2">
+                <i class='bx bxs-info-circle text-xl text-gray-800'></i>
+                <p class="ml-2 text-gray-800 font-medium">Informasi Servis</p>
             </div>
 
-            <!-- Checkpoint 2 -->
-            <div class="relative text-center cursor-pointer" @click="setProgress(1)">
-                <i :class="progress === 50 ? 'bx bxs-check-square text-green-500 -translate-y-7 transition duration-1000' : 'bx bxs-check-square text-gray-400 translate-y-0 transition duration-1000'"
-                    class="text-4xl block transform"></i>
-                <p :class="progress >= 50 ? 'text-green-500' : 'text-gray-400'" class="mt-2">Sedang Diperbaiki</p>
+            <!-- Divider Line -->
+            <div class="w-full h-[1px] bg-gray-300"></div>
+
+            <!-- Informasi -->
+            <div class="w-full py-4">
+                <div class="grid grid-cols-[auto_min-content_auto] gap-x-3 gap-y-2 w-fit h-fit">
+                    <p class="text-gray-700"><i class='bx bxs-calendar-alt mr-2 hidden md:inline'></i>Tanggal Servis</p>
+                    <p class="text-gray-700">:</p>
+                    <p class="text-gray-700">10 Februari 2025</p>
+
+                    <p class="text-gray-700"><i class='bx bxs-file mr-2 hidden md:inline'></i>Detail Servis</p>
+                    <p class="text-gray-700">:</p>
+                    <p class="text-gray-700">Menungu Pemeriksaan</p>
+
+                    <p class="text-gray-700"><i class='bx bx-money mr-2 hidden md:inline'></i>Estimasi Biaya</p>
+                    <p class="text-gray-700">:</p>
+                    <p class="text-gray-700">Menungu Pemeriksaan</p>
+                </div>
             </div>
 
-            <!-- Checkpoint 3 -->
-            <div class="relative text-center cursor-pointer" @click="setProgress(2)">
-                <i :class="progress === 100 ? 'bx bxs-check-square text-green-500 -translate-y-7 transition duration-1000' : 'bx bxs-check-square text-gray-400 translate-y-0 transition duration-1000'"
-                    class="text-4xl block transform"></i>
-                <p :class="progress >= 100 ? 'text-green-500' : 'text-gray-400'" class="mt-2">Selesai Perbaikan</p>
-            </div>
         </div>
     </div>
 </div>
-
-<script>
-    function progressBar() {
-        return {
-            progress: 10,
-
-            setProgress(step) {
-                this.progress = step * 50;
-            },
-
-            getCarPosition() {
-                let position;
-                if (this.progress === 0) {
-                    position = '8%';  // Offset untuk posisi awal
-                } else if (this.progress === 100) {
-                    position = '92%';  // Offset untuk posisi akhir
-                } else {
-                    position = this.progress + '%';  // Posisi tengah
-                }
-                return `left: ${position}`;
-            }
-        }
-    }
-</script>

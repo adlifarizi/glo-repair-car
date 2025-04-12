@@ -1,6 +1,6 @@
 @extends('main.layouts.app')
 
-@section('title', 'Layanan')
+@section('title', 'Kontak')
 
 @section('content')
     <div>
@@ -26,7 +26,7 @@
                 <div class="relative w-full h-[500px]">
                     <!-- Map Section (Full Width) -->
                     <div class="absolute top-0 right-0 w-[85%] h-full">
-                        <iframe class="w-full h-full rounded-lg shadow-lg"
+                        <iframe class="w-full h-full rounded-lg"
                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4628677988408!2d106.80353987338422!3d-6.589245164409667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5d2e602b501%3A0x25a12f0f97fac4ee!2sSekolah%20Vokasi%20Institut%20Pertanian%20Bogor!5e0!3m2!1sid!2sid!4v1739615211587!5m2!1sid!2sid"
                             style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
                         </iframe>
@@ -34,8 +34,10 @@
 
                     <!-- Contact Information Card (Absolute Positioning) -->
                     <div class="absolute top-1/2 -translate-y-1/2 left-0 w-80 z-10">
-                        <div class="bg-red-700 text-white rounded-lg shadow-lg p-6">
-                            <h3 class="text-xl font-bold mb-6">Informasi Kontak</h3>
+                        <div class="bg-red-700 text-white rounded-lg p-6">
+                            <h3 class="text-xl font-bold">Informasi Kontak</h3>
+
+                            <div class="w-full h-1 bg-gray-300/50 my-4"></div>
 
                             <!-- Address Section -->
                             <div class="mb-6">
@@ -50,7 +52,7 @@
                                         </svg>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold mb-1">Alamat Katering</h3>
+                                        <h3 class="font-semibold mb-1">Alamat Bengkel</h3>
                                         <p class="text-sm">Jl. Malabar, RT.01/RW.08, Babakan, Kecamatan Bogor Tengah, 16129
                                         </p>
                                     </div>
@@ -75,7 +77,7 @@
                             </div>
 
                             <!-- Email Section -->
-                            <div class="mb-6">
+                            <div>
                                 <div class="flex items-start gap-3">
                                     <div class="mt-1">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none"

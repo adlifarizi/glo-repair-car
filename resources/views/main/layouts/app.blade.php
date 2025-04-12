@@ -22,8 +22,6 @@
     <!-- Box Icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    <script src="//unpkg.com/alpinejs" defer></script>
-
     <!-- Swiper -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
@@ -43,6 +41,9 @@
 
     <!-- Footer -->
     @include('main.components.footer')
+
+    <!-- Chat Bubble -->
+    @include('main.components.chat-bubble')
 </body>
 
 </html>
