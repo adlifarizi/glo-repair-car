@@ -107,25 +107,17 @@
     </div>
 
     <style>
-        .leaflet-popup-content {
-            display: flex !important;
-            flex-direction: column !important;
-            justify-content: end !important;
-            align-items: end !important;
+        .leaflet-popup-content-wrapper {
+            font-size: 14px;
+            color: #8E1616 !important;
         }
-
-        .leaflet-popup-content b {
-            color: #B30000 !important;
-            font-size: large !important;
-            font-weight: 600 !important;
-        }
-
+        
         .leaflet-control-zoom {
             position: absolute !important;
             right: 10px !important;
             bottom: 10px !important;
             display: flex;
-            flex-direction: column
+            flex-direction: column;
             border: none !important;
             box-shadow: none !important;
         }
@@ -192,17 +184,10 @@
         const marker = L.marker([latitude, longitude]).addTo(map);
 
         marker.bindPopup(`
-            <b>Bogor, Indonesia</b><br>
-            <span style="display: flex; align-items: center; gap: 6px;">
-                <span class="text-end">Jl. Malabar, RT.01/RW.08, Babakan, 16129</span>
-                <img src="/icons/contact-map.svg" width="auto" height="36" alt="Alamat">
-            </span><br>
-            <span style="display: flex; align-items: center; gap: 6px;">
-                <span>0812345678910</span>
-                <img src="/icons/contact-phone.svg" width="auto" height="36" alt="Telepon">
-            </span><br>
-
-            <a href="https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}" target="_blank" class="text-red-500 underline">🔗 Rute ke Lokasi</a>
-        `).openPopup();
+                    <b>Bogor, Indonesia</b><br>
+                    Jl. Malabar, RT.01/RW.08, Babakan, 16129<br>
+                    0812345678910<br>
+                    <a href="https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}" target="_blank" class="text-red-500 underline">🔗 Rute ke Lokasi</a>
+                `).openPopup();
     </script>
 @endsection

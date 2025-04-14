@@ -37,6 +37,16 @@
 
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <!-- Flatpickr -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body class="flex" x-data="{ sidebarOpen: false }">
@@ -61,34 +71,8 @@
     </div>
 
     <!-- Main Content -->
-    <div class="flex-1 min-w-0">
-        <div class="flex flex-col bg-[#F2F2F2] min-h-screen">
-            <!-- Header -->
-            <div class="p-4 bg-red-700 flex items-center justify-between text-white">
-                <!-- Hamburger Button (mobile only) -->
-                <button class="md:hidden" @click="sidebarOpen = true">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                    </svg>
-                </button>
-
-                <!-- Title (hidden on mobile) -->
-                <div class="flex-col gap-2 hidden md:flex">
-                    <p class="text-red-300">
-                        {{ \Carbon\Carbon::now()->locale('id')->isoFormat('dddd, D MMM, HH.mm') }}
-                    </p>
-                    <p>Glo Repair Car Admin Site</p>
-                </div>
-
-                <!-- Right side -->
-                <p>Halo, admin</p>
-            </div>
-
-            <!-- Page Content -->
-            <div class="p-4">
-                @yield('content')
-            </div>
-        </div>
+    <div class="flex-1 min-w-0 bg-[#F2F2F2]">
+        @yield('content')
     </div>
 
 </body>

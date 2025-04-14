@@ -1,4 +1,4 @@
-<div class="w-full flex flex-col md:flex-row gap-8">
+<div class="w-full flex flex-col md:flex-row gap-8 hidden"> <!-- Hapus hidden saat hasil keluar -->
     <!-- Kartu Status Antrian -->
     <div class="bg-white rounded-lg ring-2 ring-gray-200 p-3 flex-1">
         <h2 class="text-gray-700 font-medium mb-4">3 Maret 2025, 09.34</h2>

@@ -3,10 +3,18 @@
 @tailwind utilities;
 
 @layer base {
-
     html,
     body {
         font-family: 'Poppins', sans-serif !important;
         background: #FFFFFF !important;
     }
+}
+
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
 }

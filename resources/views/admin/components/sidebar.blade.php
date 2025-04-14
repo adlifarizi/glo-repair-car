@@ -2,12 +2,12 @@
     $menuItems = [
         ['name' => 'Dashboard', 'icon' => "admin.icon.nav-dashboard", 'route' => '/dashboard'],
         ['name' => 'Kelola Entri Servis', 'icon' => "admin.icon.nav-entri", 'route' => '/kelola-entri-servis'],
-        ['name' => 'Kelola Ulasan', 'icon' => "admin.icon.nav-ulasan", 'route' => '/'],
-        ['name' => 'Kelola Chat Pelanggan', 'icon' => "admin.icon.nav-chat", 'route' => '/'],
-        ['name' => 'Kelola Maps', 'icon' => "admin.icon.nav-maps", 'route' => '/'],
-        ['name' => 'Kelola Kontak', 'icon' => "admin.icon.nav-kontak", 'route' => '/'],
-        ['name' => 'Kelola Pemasukan', 'icon' => "admin.icon.nav-pemasukan", 'route' => '/'],
-        ['name' => 'Kelola Pengeluaran', 'icon' => "admin.icon.nav-pengeluaran", 'route' => '/'],
+        ['name' => 'Kelola Ulasan', 'icon' => "admin.icon.nav-ulasan", 'route' => '/kelola-ulasan'],
+        ['name' => 'Kelola Chat Pelanggan', 'icon' => "admin.icon.nav-chat", 'route' => '/kelola-chat'],
+        ['name' => 'Kelola Maps', 'icon' => "admin.icon.nav-maps", 'route' => '/kelola-maps'],
+        ['name' => 'Kelola Kontak', 'icon' => "admin.icon.nav-kontak", 'route' => '/kelola-kontak'],
+        ['name' => 'Kelola Pemasukan', 'icon' => "admin.icon.nav-pemasukan", 'route' => '/kelola-pemasukan'],
+        ['name' => 'Kelola Pengeluaran', 'icon' => "admin.icon.nav-pengeluaran", 'route' => '/kelola-pengeluaran'],
     ];
 @endphp
 

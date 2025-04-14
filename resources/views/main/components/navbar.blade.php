@@ -1,4 +1,4 @@
-<nav id="navbar" class="fixed w-full z-50 bg-transparent transition-all duration-300">
+<nav id="navbar" class="fixed w-full z-50 bg-black md:bg-transparent transition-all duration-300">
     <div class="max-w-7xl mx-auto py-3">
         <div class="flex items-center justify-start md:justify-center">
 
@@ -77,11 +77,21 @@
     window.addEventListener("scroll", function () {
         const navbar = document.getElementById("navbar");
         if (window.scrollY > 10) { // Jika scroll lebih dari 10px
-            navbar.classList.remove("bg-transparent");
-            navbar.classList.add("bg-black");
+            if (window.innerWidth < 768) { // Mobile
+                navbar.classList.remove("bg-transparent");
+                navbar.classList.add("bg-black");
+            } else { // Desktop
+                navbar.classList.remove("md:bg-transparent");
+                navbar.classList.add("md:bg-black");
+            }
         } else {
-            navbar.classList.remove("bg-black");
-            navbar.classList.add("bg-transparent");
+            if (window.innerWidth < 768) { // Mobile
+                navbar.classList.remove("bg-transparent");
+                navbar.classList.add("bg-black");
+            } else { // Desktop
+                navbar.classList.add("md:bg-transparent");
+                navbar.classList.remove("md:bg-black");
+            }
         }
     });
 </script>
