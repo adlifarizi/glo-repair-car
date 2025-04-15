@@ -31,6 +31,7 @@ $(document).ready(function () {
         var formData = new FormData(formElement);
 
         const url = mode === 'edit' ? `/api/pengeluaran/${pengeluaranId}` : '/api/pengeluaran';
+        const action = mode === 'edit' ? 'diubah' : 'ditambahkan';
 
          // Add _method field for Laravel to handle PUT requests
          if (mode === 'edit') {
@@ -49,7 +50,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 hideSubmitSpinner('submit-button', 'spinner');
-                showDialog('dialog-success');
+                showDialog('dialog-success', `Data pengeluaran berhasil ${action}!`);
 
                 // Redirect after success if needed
                 setTimeout(() => {
@@ -59,7 +60,7 @@ $(document).ready(function () {
             error: function (xhr) {
                 hideSubmitSpinner('submit-button', 'spinner');
                 let response = xhr.responseJSON;
-                showDialog('dialog-error', null, response?.message || 'Terjadi kesalahan saat menyimpan data');
+                showDialog('dialog-error', response?.message || `Data pengeluaran gagal ${action}!`);
             }
         });
     });
@@ -117,7 +118,7 @@ $(document).ready(function () {
                     }
                 }
 
-                if (errorMessage != "Data tidak ditemukan") showDialog('dialog-error', null, errorMessage);
+                if (errorMessage != "Data tidak ditemukan") showDialog('dialog-error', errorMessage);
             }
         });
     }

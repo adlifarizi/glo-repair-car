@@ -32,92 +32,46 @@ Route::get('/dashboard', function () {
 });
 
 
-Route::get('/kelola-entri-servis', function () {
-    $pelanggan = collect([
-        (object) [
-            'id' => 1,
-            'plat_nomor' => 'F 5383 UBT',
-            'nama_pelanggan' => 'Glorian Hilarius',
-            'nomor_whatsapp' => '081234567890',
-            'status_servis' => 'Selesai',
-            'keterangan' => 'Ganti oli, cek rem',
-            'harga' => 150000,
-            'kunjungan_selanjutnya' => '2025-05-01',
-        ],
-        (object) [
-            'id' => 2,
-            'plat_nomor' => 'B 1234 ABC',
-            'nama_pelanggan' => 'Indra Wijaya',
-            'nomor_whatsapp' => '082198765432',
-            'status_servis' => 'Dalam Perbaikan',
-            'keterangan' => 'Servis mesin',
-            'harga' => 300000,
-            'kunjungan_selanjutnya' => '2025-06-10',
-        ],
-        (object) [
-            'id' => 3,
-            'plat_nomor' => 'D 5678 DEF',
-            'nama_pelanggan' => 'Maria Lestari',
-            'nomor_whatsapp' => '089876543210',
-            'status_servis' => 'Dalam Antrian',
-            'keterangan' => 'Cek AC dan kelistrikan',
-            'harga' => 250000,
-            'kunjungan_selanjutnya' => '2025-04-20',
-        ],
-    ]);
 
-    return view('admin.manage-service-entries', compact('pelanggan'));
+/*
+|--------------------------------------------------------------------------
+| Route Entri Servis
+|--------------------------------------------------------------------------
+*/
+Route::get('/kelola-entri-servis', function () {
+    return view('admin.manage-service-entries');
 });
 
 Route::get('/tambah-entri-servis', function () {
-    return view('admin.form-service-entry');
+    return view('admin.form-service-entry', [
+        'mode' => 'create',
+    ]);
 });
 
 Route::get('/ubah-entri-servis/{id}', function () {
-    $entriServis = (object) [
-        'id' => 3,
-        'plat_nomor' => 'D 5678 DEF',
-        'nama_pelanggan' => 'Maria Lestari',
-        'nomor_whatsapp' => '089876543210',
-        'status_servis' => 'Dalam Antrian',
-        'keterangan' => 'Cek AC dan kelistrikan',
-        'harga' => 250000,
-        'kunjungan_selanjutnya' => '2025-04-20',
-    ];
-    return view('admin.form-service-entry', compact('entriServis'));
-});
-
-Route::get('/kelola-ulasan', function () {
-    $ulasan = collect([
-        (object) [
-            'id' => 1,
-            'plat_no' => 'F 5383 UBT',
-            'nama_pelanggan' => 'Glorian Hilarius',
-            'rating' => 5,
-            'feedback' => 'Fasilitas bagus, Montir, admin-nya dan pemiliknya juga ramah. harga terbaik',
-            'show' => true,
-        ],
-        (object) [
-            'id' => 2,
-            'plat_no' => 'B 1234 ABC',
-            'nama_pelanggan' => 'Indra Wijaya',
-            'rating' => 4,
-            'feedback' => 'Fasilitas bagus, Montir, admin-nya dan pemiliknya juga ramah. harga terbaik',
-            'show' => true,
-        ],
-        (object) [
-            'id' => 3,
-            'plat_no' => 'D 5678 DEF',
-            'nama_pelanggan' => 'Maria Lestari',
-            'rating' => 5,
-            'feedback' => 'Fasilitas bagus, Montir, admin-nya dan pemiliknya juga ramah. harga terbaik',
-            'show' => false,
-        ],
+    return view('admin.form-service-entry', [
+        'mode' => 'edit',
     ]);
-
-    return view('admin.manage-feedback', compact('ulasan'));
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Kelola Ulasan
+|--------------------------------------------------------------------------
+*/
+Route::get('/kelola-ulasan', function () {
+    return view('admin.manage-feedback');
+});
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Kelola Chat
+|--------------------------------------------------------------------------
+*/
 Route::get('/kelola-chat', function () {
     $path = resource_path('views/admin/data/chat-sessions.json');
 
@@ -146,7 +100,7 @@ Route::get('/kelola-chat/session/{id}', function ($id) {
 
 /*
 |--------------------------------------------------------------------------
-| Route Maps & Kontak
+| Route Kelola Maps & Kontak
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-maps', function () {
@@ -161,7 +115,7 @@ Route::get('/kelola-kontak', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Route Pemasukan
+| Route Kelola Pemasukan
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-pemasukan', function () {
@@ -184,7 +138,7 @@ Route::get('/ubah-pemasukan/{id}', function () {
 
 /*
 |--------------------------------------------------------------------------
-| Route Pengeluaran
+| Route Kelola Pengeluaran
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-pengeluaran', function () {

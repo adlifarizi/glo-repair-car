@@ -1,8 +1,5 @@
-function showDialog(id, title = null, message = null) {
+function showDialog(id, message = null) {
     const dialog = document.getElementById(id);
-    if (title) {
-        dialog.querySelector('h2').textContent = title;
-    }
     if (message) {
         dialog.querySelector('p').textContent = message;
     }

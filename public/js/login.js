@@ -46,7 +46,7 @@ $(document).ready(function () {
                         input.after('<p class="text-red-500 text-sm error-message mt-1">' + messages[0] + '</p>');
                     });
                 } else {
-                    showDialog('dialog-error', null, response.message);
+                    showDialog('dialog-error', response.message);
                 }
             }
         });

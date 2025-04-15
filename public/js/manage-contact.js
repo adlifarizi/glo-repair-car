@@ -29,11 +29,11 @@ $(document).ready(function () {
             },
             success: function (response) {
                 hideSubmitSpinner('submit-button', 'spinner');
-                showDialog('dialog-success');
+                showDialog('dialog-success', 'Data kontak berhasil diubah!');
             },
             error: function (xhr) {
                 hideSubmitSpinner('submit-button', 'spinner');
-                let errorMessage = 'Gagal menyimpan data kontak.';
+                let errorMessage = 'Data kontak gagal diubah!';
 
                 // Coba parse error response
                 if (xhr.responseJSON) {
@@ -67,7 +67,7 @@ $(document).ready(function () {
                 }
             },
             error: function (xhr) {
-                showDialog('dialog-error', null, 'Gagal mengambil data kontak');
+                showDialog('dialog-error', 'Gagal mengambil data kontak');
             }
         });
     }

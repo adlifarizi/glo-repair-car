@@ -93,47 +93,18 @@ $(document).ready(function () {
             },
             success: function (response) {
                 hideSubmitSpinner('submit-button', 'spinner');
-                showDialog('dialog-success');
+                showDialog('dialog-success', 'Data maps berhasil diubah!');
             },
             error: function (xhr) {
                 hideSubmitSpinner('submit-button', 'spinner');
-                let errorMessage = 'Gagal menyimpan lokasi.';
+                let errorMessage = 'Data maps gagal diubah!';
 
                 if (xhr.responseJSON && xhr.responseJSON.message) {
                     errorMessage = xhr.responseJSON.message;
                 }
 
-                showDialog('dialog-error', null, errorMessage);
+                showDialog('dialog-error', errorMessage);
             }
         });
     }
 });
-
-// These functions are kept outside to maintain compatibility with existing code
-function showDialog(id, message = null) {
-    const dialog = document.getElementById(id);
-    if (message) {
-        dialog.querySelector('p').textContent = message;
-    }
-    dialog.classList.remove('hidden');
-}
-
-function showSpinner(buttonId, spinnerId) {
-    const button = document.getElementById(buttonId);
-    const spinner = document.getElementById(spinnerId);
-    const buttonText = button.querySelector('#save-button-text');
-
-    button.disabled = true;
-    buttonText.classList.add('hidden');
-    spinner.classList.remove('hidden');
-}
-
-function hideSpinner(buttonId, spinnerId) {
-    const button = document.getElementById(buttonId);
-    const spinner = document.getElementById(spinnerId);
-    const buttonText = button.querySelector('#save-button-text');
-
-    button.disabled = false;
-    buttonText.classList.remove('hidden');
-    spinner.classList.add('hidden');
-}

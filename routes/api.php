@@ -26,6 +26,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/register', [AuthController::class, 'register'])->name('register');
 
 Route::get('/entri-servis', [EntriServisController::class, 'show']);
+Route::get('/entri-servis/{id}', [EntriServisController::class, 'showByID']);
 Route::get('/check-progress', [EntriServisController::class, 'showByPlatNo']);
 Route::post('/entri-servis', [EntriServisController::class, 'store']);
 Route::put('/entri-servis/{id}', [EntriServisController::class, 'update']);

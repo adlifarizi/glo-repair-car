@@ -1,14 +1,14 @@
-let selectedPengeluaranId = null;
+let selectedServiceEntryId = null;
 
 // Fungsi untuk mengambil data kontak dari API
 function loadData() {
     $.ajax({
-        url: '/api/pengeluaran',
+        url: '/api/entri-servis',
         type: 'GET',
         contentType: 'application/json',
         success: function (response) {
             if (response && response.data) {
-                var tableBody = $('#pengeluaran-table-body');
+                var tableBody = $('#service-entries-table-body');
                 tableBody.empty(); // Clear previous data
 
                 // Loop through data and append rows to table
@@ -16,18 +16,17 @@ function loadData() {
                     var row = `
                         <tr class="odd:bg-white even:bg-gray-200">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="/ubah-pengeluaran/${item.id}" class="text-blue-500 hover:underline">Ubah</a><br>
+                                <a href="/ubah-entri-servis/${item.id}" class="text-blue-500 hover:underline">Ubah</a><br>
                                 <button class="text-red-500 hover:underline" onclick="confirmDelete(${item.id})">Hapus</button><br>
+                                <button class="text-orange-500 hover:underline">Ingatkan Pelanggan</button>
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.nominal)}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${formatDate(item.tanggal_pengeluaran)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${item.plat_no}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${item.nomor_whatsapp}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${item.status}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.keterangan ?? ''}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                ${item.bukti_pengeluaran
-                            ? `<a href="${item.bukti_pengeluaran}" target="_blank" class="text-blue-500 hover:underline">Preview</a>`
-                            : ''}
-                            </td>
-
+                            <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.harga)}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${item.prediksi ?? ''}</td>
                         </tr>
                     `;
                     tableBody.append(row);
@@ -39,7 +38,7 @@ function loadData() {
             }
         },
         error: function (xhr) {
-            let errorMessage = 'Gagal mengambil data pengeluaran';
+            let errorMessage = 'Gagal mengambil data entri servis';
 
             // Coba parse error response
             if (xhr.responseJSON) {
@@ -57,22 +56,15 @@ function loadData() {
     });
 }
 
-
 // Fungsi confirmDelete yang dipanggil saat tombol "Hapus" ditekan
 function confirmDelete(id) {
-    selectedPengeluaranId = id;
-    showDialog('dialog-confirm-delete', 'Yakin ingin menghapus pengeluaran ini?');
+    selectedServiceEntryId = id;
+    showDialog('dialog-confirm-delete', 'Yaking ingin menghapus entri servis ini?');
 }
 
 // Helper function to format number (currency format)
 function formatNumber(num) {
     return new Intl.NumberFormat('id-ID').format(num);
-}
-
-function formatDate(dateString) {
-    const options = { day: '2-digit', month: 'long', year: 'numeric' };
-    const date = new Date(dateString);
-    return date.toLocaleDateString('id-ID', options);
 }
 
 $(document).ready(function () {
@@ -94,13 +86,38 @@ $(document).ready(function () {
         table.search(searchInput).draw();
     });
 
+    // Filter tombol berdasarkan status servis
+    $('.filter-btn').on('click', function () {
+        var status = $(this).data('status');
+
+        // Reset semua button ke tampilan default
+        $('.filter-btn').removeClass('bg-red-200 text-red-500').addClass('bg-white text-gray-400 border border-gray-400 hover:bg-gray-100');
+
+        // Aktifkan tombol yang diklik
+        $(this).addClass('bg-red-200 text-red-500').removeClass('bg-white text-gray-400 border border-gray-400 hover:bg-gray-100');
+
+        // Kolom ke-4 adalah "Status Servis" (dimulai dari 0)
+        table.column(4).search(status).draw();
+    });
+
+    // Filter dari dropdown (untuk layar kecil)
+    $('#filter-select').on('change', function () {
+        var status = $(this).val();
+
+        // Sinkronisasi tombol juga (jika mau)
+        $('.filter-btn').removeClass('bg-red-200 text-red-500').addClass('bg-white text-gray-400 border border-gray-400 hover:bg-gray-100');
+        $('.filter-btn[data-status="' + status + '"]').addClass('bg-red-200 text-red-500').removeClass('bg-white text-gray-400 border border-gray-400 hover:bg-gray-100');
+
+        table.column(4).search(status).draw();
+    });
+
     // Load data saat halaman dibuka
     loadData();
 
     document.addEventListener('delete-confirmed', () => {
         try {
             $.ajax({
-                url: `/api/pengeluaran/${selectedPengeluaranId}`,
+                url: `/api/entri-servis/${selectedServiceEntryId}`,
                 type: 'DELETE',
                 contentType: 'application/json',
                 success: function (response) {
@@ -109,14 +126,14 @@ $(document).ready(function () {
                         document.getElementById('dialog-confirm-delete').classList.add('hidden');
 
                         // Tampilkan dialog sukses
-                        showDialog('dialog-success', 'Data pengeluaran berhasil dihapus!');
+                        showDialog('dialog-success', 'Data entri servis berhasil dihapus!');
 
                         // Muat ulang data tabel
                         loadData();
                     }
                 },
                 error: function (xhr) {
-                    let errorMessage = 'Data pengeluaran gagal dihapus!';
+                    let errorMessage = 'Data entri servis gagal dihapus!';
 
                     // Coba parse error response
                     if (xhr.responseJSON) {

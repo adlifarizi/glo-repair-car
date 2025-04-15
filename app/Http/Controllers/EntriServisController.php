@@ -21,6 +21,22 @@ class EntriServisController extends Controller
         ]);
     }
 
+    public function showById($id)
+    {
+        $data = Entri_Servis::find($id);
+
+        if (!$data) {
+            return response()->json([
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+
+        return response()->json([
+            'message' => 'Data berhasil diambil',
+            'data' => $data
+        ], 200);
+    }
+
     public function showByPlatNo(Request $request)
     {
         $plat_no = $request->input('plat_no');
