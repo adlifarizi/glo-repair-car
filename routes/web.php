@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\CheckSanctumToken;
 use Illuminate\Support\Facades\Route;
 
 
@@ -29,6 +30,7 @@ Route::get('/login', function () {
 Route::get('/dashboard', function () {
     return view('admin.index');
 });
+
 
 Route::get('/kelola-entri-servis', function () {
     $pelanggan = collect([
@@ -141,109 +143,64 @@ Route::get('/kelola-chat/session/{id}', function ($id) {
 });
 
 
+
+/*
+|--------------------------------------------------------------------------
+| Route Maps & Kontak
+|--------------------------------------------------------------------------
+*/
 Route::get('/kelola-maps', function () {
     return view('admin.manage-maps');
 });
 
 Route::get('/kelola-kontak', function () {
-    $contact = (object) [
-        'id' => 1,
-        'email' => 'glo.repair@gmail.com',
-        'instagram' => 'https://www.instagram.com/glorian/',
-        'nomor_telepon' => '081234567890',
-        'nomor_whatsapp' => '081234567890',
-    ];
-    return view('admin.manage-contact', compact('contact'));
+    return view('admin.manage-contact');
 });
 
-Route::get('/kelola-pemasukan', function () {
-    $pemasukan = collect([
-        (object) [
-            'id' => 1,
-            'id_servis' => 1,
-            'nominal' => 150000,
-            'keterangan' => '-',
-            'tanggal_pemasukan' => '2025-05-01',
-            'bukti_pemasukan' => 'nanti url',
-        ],
-        (object) [
-            'id' => 2,
-            'id_servis' => 2,
-            'nominal' => 250000,
-            'keterangan' => '-',
-            'tanggal_pemasukan' => '2025-05-01',
-            'bukti_pemasukan' => 'nanti url',
-        ],
-        (object) [
-            'id' => 3,
-            'id_servis' => 3,
-            'nominal' => 1700000,
-            'keterangan' => '-',
-            'tanggal_pemasukan' => '2025-05-01',
-            'bukti_pemasukan' => 'nanti url',
-        ],
-    ]);
 
-    return view('admin.manage-revenue', compact('pemasukan'));
+
+/*
+|--------------------------------------------------------------------------
+| Route Pemasukan
+|--------------------------------------------------------------------------
+*/
+Route::get('/kelola-pemasukan', function () {
+    return view('admin.manage-revenue');
 });
 
 Route::get('/tambah-pemasukan', function () {
-    return view('admin.form-revenue');
+    return view('admin.form-revenue', [
+        'mode' => 'create',
+    ]);
 });
 
 Route::get('/ubah-pemasukan/{id}', function () {
-    $pemasukan = (object) [
-        'id' => 3,
-        'id_servis' => 3,
-        'nominal' => 1700000,
-        'keterangan' => '-',
-        'tanggal_pemasukan' => '2025-05-01',
-        'bukti_pemasukan' => 'coba.png',
-    ];
-    return view('admin.form-revenue', compact('pemasukan'));
+    return view('admin.form-revenue', [
+        'mode' => 'edit',
+    ]);
 });
 
-Route::get('/kelola-pengeluaran', function () {
-    $pengeluaran = collect([
-        (object) [
-            'id' => 1,
-            'nominal' => 150000,
-            'keterangan' => '-',
-            'tanggal_pengeluaran' => '2025-05-01',
-            'bukti_pengeluaran' => 'nanti url',
-        ],
-        (object) [
-            'id' => 2,
-            'nominal' => 250000,
-            'keterangan' => '-',
-            'tanggal_pengeluaran' => '2025-05-01',
-            'bukti_pengeluaran' => 'nanti url',
-        ],
-        (object) [
-            'id' => 3,
-            'nominal' => 1700000,
-            'keterangan' => '-',
-            'tanggal_pengeluaran' => '2025-05-01',
-            'bukti_pengeluaran' => 'nanti url',
-        ],
-    ]);
 
-    return view('admin.manage-expense', compact('pengeluaran'));
+
+/*
+|--------------------------------------------------------------------------
+| Route Pengeluaran
+|--------------------------------------------------------------------------
+*/
+Route::get('/kelola-pengeluaran', function () {
+    return view('admin.manage-expense');
 });
 
 Route::get('/tambah-pengeluaran', function () {
-    return view('admin.form-expense');
+    return view('admin.form-expense', [
+        'mode' => 'create',
+    ]);
 });
 
 Route::get('/ubah-pengeluaran/{id}', function () {
-    $pengeluaran = (object) [
-        'id' => 3,
-        'nominal' => 1700000,
-        'keterangan' => '-',
-        'tanggal_pengeluaran' => '2025-05-01',
-        'bukti_pengeluaran' => 'coba.png',
-    ];
-    return view('admin.form-expense', compact('pengeluaran'));
+    return view('admin.form-expense', [
+        'mode' => 'edit',
+    ]);
 });
 
 

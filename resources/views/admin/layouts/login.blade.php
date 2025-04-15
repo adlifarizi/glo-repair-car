@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Login</title>
 
@@ -21,12 +22,23 @@
     <!-- Box Icons -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
     <!-- Styles / Scripts -->
     @vite('resources/css/app.css')
+
+    <!-- Global Javascript -->
+    <script src="{{ asset('js/global.js') }}" defer></script>
 </head>
 
 <body>
     <div class="flex items-center justify-center bg-[#CCCCCC] h-screen p-12">
+
+        @include('admin.components.dialog', ['id' => 'dialog-success', 'show' => false, 'type' => 'success', 'title' => 'Data Valid!', 'message' => 'Login berhasil, anda akan dibawa ke dashboard'])
+        @include('admin.components.dialog', ['id' => 'dialog-error', 'show' => false, 'type' => 'error', 'title' => 'Data Tidak Valid!', 'message' => 'Login gagal, Akun tidak terdaftar!'])
+
         <div class="flex bg-white w-fit h-fit md:h-full rounded-3xl overflow-hidden">
             <!-- Gambar di sebelah kiri -->
             <div class="hidden md:block w-1/2">
@@ -43,20 +55,19 @@
 
                     <p class="text-gray-600 my-6">Halo admin, silahkan masuk dengan akun anda</p>
 
-                    <form method="POST">
-                        @csrf
+                    <form id="login-form">
                         <!-- Email -->
                         <div class="mb-4">
                             <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Alamat Email</label>
                             <input id="email" type="email" name="email" value="{{ old('email') }}"
-                                placeholder="glo@glo.com" required
+                                placeholder="glo@glo.com"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" />
                         </div>
 
                         <!-- Password -->
                         <div class="mb-4">
                             <label for="password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                            <input id="password" type="password" name="password" placeholder="************" required
+                            <input id="password" type="password" name="password" placeholder="************"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500" />
                         </div>
 
@@ -70,15 +81,20 @@
                         </div>
 
                         <!-- Submit button -->
-                        <button type="submit"
+                        <button type="submit" id="submit-button"
                             class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
-                            Login
+                            <span id="submit-button-text">Login</span>
+                            <div id="spinner" class="hidden" role="status">
+                                <i class="fa-solid fa-spinner animate-spin"></i>
+                            </div>
                         </button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="{{ asset('js/login.js') }}" defer></script>
 </body>
 
 </html>

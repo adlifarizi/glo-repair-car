@@ -7,29 +7,10 @@
         @include('admin.components.header')
 
         <div class="p-4">
-            <!-- Dialog Berhasil -->
-            @include('admin.components.dialog', [
-                'id' => 'dialog-success',
-                'show' => false,
-                'type' => 'success',
-                'message' => 'Data entri servis berhasil dihapus!'
-            ])
-
-            <!-- Dialog Gagal -->
-            @include('admin.components.dialog', [
-                'id' => 'dialog-error',
-                'show' => false,
-                'type' => 'error',
-                'message' => 'Data entri servis gagal dihapus!'
-            ])
-
-            <!-- Dialog Delete -->
-            @include('admin.components.dialog', [
-                'id' => 'hapus-entri-servis',
-                'show' => false,
-                'type' => 'delete',
-                'message' => 'Yakin ingin menghapus entri servis ini?'
-            ])
+            <!-- Dialog -->
+            @include('admin.components.dialog', ['id' => 'dialog-success', 'show' => false, 'type' => 'success', 'message' => ''])
+            @include('admin.components.dialog', ['id' => 'dialog-error', 'show' => false, 'type' => 'error', 'message' => ''])
+            @include('admin.components.dialog', ['id' => 'dialog-confirm-delete', 'show' => false, 'type' => 'confirm-delete', 'message' => 'Yakin ingin menghapus pengeluaran ini?'])
 
             <!-- Page title -->
             <div class="flex flex-col md:flex-row items-start md:items-center gap-4 justify-between my-4">
@@ -43,7 +24,7 @@
                 <p class="text-gray-600">Data ini merupakan pengeluaran</p>            
 
                 <div class="my-4">
-                    <input type="text" id="customExpenseSearch" placeholder="🔍︎ Cari data pengeluaran"
+                    <input type="text" id="customSearch" placeholder="🔍︎ Cari data pengeluaran"
                         class="w-full border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring-1 focus:ring-gray-500">
                 </div>
 
@@ -58,86 +39,15 @@
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Bukti Pengeluaran</th>
                         </tr>
                     </thead>
-                    <tbody class="bg-white text-gray-600">
-                        @foreach ($pengeluaran as $item)
-                            <tr class="odd:bg-white even:bg-gray-200">
-                                <td class="px-6 py-4 whitespace-nowrap">
-                                    <a href="{{ url('/ubah-pengeluaran', ['id' => $item->id]) }}" class="text-blue-500 hover:underline">Ubah</a><br>
-                                    <button class="text-red-500 hover:underline" onclick="showDeleteDialog(event)">Hapus</button><br>
-                                </td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ number_format($item->nominal, 0, ',', '.') }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $item->tanggal_pengeluaran }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $item->keterangan }}</td>
-                                <td class="px-6 py-4 whitespace-nowrap">{{ $item->bukti_pengeluaran }}</td>
-                            </tr>
-                        @endforeach
+                    <tbody class="bg-white text-gray-600" id="pengeluaran-table-body">
+                        
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            var table = $('#data-table').DataTable({
-                scrollX: true,
-                lengthChange: false,
-                language: {
-                    zeroRecords: "Data tidak ditemukan",
-                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
-                    infoFiltered: "",
-                    infoEmpty: "Tidak ada data tersedia",
-                }
-            });
-
-            // Custom search
-            $('#customExpenseSearch').on('keyup', function () {
-                var searchInput = $(this).val()
-                table.search(searchInput).draw();
-            });
-
-        });
-    </script>
-
-    <script>
-        function showSuccessDialog(event) {
-            event.preventDefault();
-            document.getElementById('dialog-success').classList.remove('hidden');
-        }
-
-        function showErrorDialog(event) {
-            event.preventDefault();
-            document.getElementById('dialog-error').classList.remove('hidden');
-        }
-
-        function showDeleteDialog(event) {
-            event.preventDefault();
-            document.getElementById('hapus-entri-servis').classList.remove('hidden');
-        }
-
-        // Tangani aksi konfirmasi
-        document.addEventListener('delete-confirmed', () => {
-            try {
-                // Di sini lakukan aksi hapus, bisa redirect atau AJAX
-                // Contoh redirect ke route:
-                // window.location.href = '/admin/hapus/123'; // ganti sesuai ID
-
-                // tutup setelah selesai
-                document.getElementById('hapus-entri-servis').classList.add('hidden');
-
-                // tunjukkan dialog berhasil
-                showSuccessDialog(event);
-            } catch {
-                showErrorDialog(event);
-            }
-            
-        });
-
-        // Batal
-        document.addEventListener('delete-cancelled', () => {
-            document.getElementById('hapus-entri-servis').classList.add('hidden');
-        });
-    </script>
+    <script src="{{ asset('js/manage-expense.js') }}" defer></script>
 
     <style>
         .dt-search {
