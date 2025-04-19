@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/manage-revenue.js') }}" defer></script>
+    <script src="{{ asset('js/admin/manage-revenue.js') }}" defer></script>
 
     <style>
         .dt-search {

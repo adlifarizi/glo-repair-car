@@ -48,7 +48,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm text-white">+62 81234567890</p>
+                        <p class="text-sm text-white" id="footer-phone">Loading...</p>
                     </div>
                 </div>
 
@@ -64,7 +64,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm text-white">Jl. Malabar, RT.01/RW.08, Babakan</p>
+                        <p class="text-sm text-white" id="footer-address">Loading...</p>
                     </div>
                 </div>
 
@@ -78,7 +78,7 @@
                         </svg>
                     </div>
                     <div>
-                        <p class="text-sm text-white">glorepaircar@gmail.com</p>
+                        <p class="text-sm text-white" id="footer-email">Loading...</p>
                     </div>
                 </div>
 

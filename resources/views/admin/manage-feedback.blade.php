@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/manage-feedback.js') }}" defer></script>
+    <script src="{{ asset('js/admin/manage-feedback.js') }}" defer></script>
 
     <style>
         .dt-search {

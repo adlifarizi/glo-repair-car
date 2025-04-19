@@ -110,5 +110,5 @@
         const pemasukanId = "{{ request()->route('id') ?? '' }}";
     </script>
 
-    <script src="{{ asset('js/form-revenue.js') }}" defer></script>
+    <script src="{{ asset('js/admin/form-revenue.js') }}" defer></script>
 @endsection

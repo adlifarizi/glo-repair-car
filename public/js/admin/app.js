@@ -17,6 +17,13 @@ function showConfirmDeleteDialog(id, title = null, message = null) {
     dialog.classList.remove('hidden');
 }
 
+function handleBackdropClick(event, dialogId) {
+    const content = document.getElementById(dialogId + '-content');
+    if (!content.contains(event.target)) {
+        document.getElementById(dialogId).classList.add('hidden');
+    }
+}
+
 function showSubmitSpinner(buttonId, spinnerId) {
     const button = document.getElementById(buttonId);
     const spinner = document.getElementById(spinnerId);

@@ -123,5 +123,5 @@
         const serviceEntryId = "{{ request()->route('id') ?? '' }}";
     </script>
 
-    <script src="{{ asset('js/form-service-entry.js') }}" defer></script>
+    <script src="{{ asset('js/admin/form-service-entry.js') }}" defer></script>
 @endsection

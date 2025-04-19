@@ -76,7 +76,7 @@
         </div>
     </div>
 
-    <script src="{{ asset('js/manage-service-entries.js') }}" defer></script>
+    <script src="{{ asset('js/admin/manage-service-entries.js') }}" defer></script>
 
     <style>
         .dt-search {

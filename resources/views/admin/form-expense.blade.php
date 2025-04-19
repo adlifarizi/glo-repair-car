@@ -99,5 +99,5 @@
         const pengeluaranId = "{{ request()->route('id') ?? '' }}";
     </script>
 
-    <script src="{{ asset('js/form-expense.js') }}" defer></script>
+    <script src="{{ asset('js/admin/form-expense.js') }}" defer></script>
 @endsection

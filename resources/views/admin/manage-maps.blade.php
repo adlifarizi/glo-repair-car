@@ -47,6 +47,9 @@
         </div>
     </div>
 
+    <!-- Load js -->
+    <script src="{{ asset('js/admin/manage-maps.js') }}" defer></script>
+
     <style>
         .leaflet-popup-content-wrapper {
             font-size: 14px;
@@ -90,7 +93,4 @@
             border-bottom-right-radius: 10px !important;
         }
     </style>
-
-    <!-- Load js -->
-    <script src="{{ asset('js/manage-maps.js') }}" defer></script>
 @endsection

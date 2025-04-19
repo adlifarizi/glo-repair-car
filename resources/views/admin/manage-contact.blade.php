@@ -80,5 +80,5 @@
     </div>
 
     <!-- Load js -->
-    <script src="{{ asset('js/manage-contact.js') }}" defer></script>
+    <script src="{{ asset('js/admin/manage-contact.js') }}" defer></script>
 @endsection

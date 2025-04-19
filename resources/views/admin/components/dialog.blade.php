@@ -1,6 +1,7 @@
 <div id="{{ $id ?? 'dialog' }}"
-    class="{{ $show ? '' : 'hidden' }} fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50">
-    <div
+    class="{{ $show ? '' : 'hidden' }} fixed inset-0 bg-black bg-opacity-30 flex items-center justify-center z-50"
+    onclick="handleBackdropClick(event, '{{ $id ?? 'dialog' }}')">
+    <div id="{{ $id ?? 'dialog' }}-content"
         class="w-full max-w-md flex flex-col items-center justify-center gap-3 px-6 py-4 bg-white rounded-xl border shadow-md">
         @if($type === 'success')
             <i class="fa-regular fa-circle-check text-7xl text-green-500"></i>

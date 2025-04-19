@@ -50,7 +50,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <!-- Global Javascript -->
-    <script src="{{ asset('js/global.js') }}" defer></script>
+    <script src="{{ asset('js/admin/app.js') }}" defer></script>
 </head>
 
 <body class="flex" x-data="{ sidebarOpen: false }">

@@ -12,14 +12,26 @@ Route::get('/layanan', function () {
     return view('main.layanan');
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Ulasan
+|--------------------------------------------------------------------------
+*/
 Route::get('/ulasan', function () {
     return view('main.ulasan');
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Kontak
+|--------------------------------------------------------------------------
+*/
 Route::get('/kontak', function () {
-    $latitude = -6.5891473;
-    $longitude = 106.806127;
-    return view('main.kontak', compact('latitude', 'longitude'));
+    return view('main.kontak');
 });
 
 // Admin Route
@@ -156,15 +168,3 @@ Route::get('/ubah-pengeluaran/{id}', function () {
         'mode' => 'edit',
     ]);
 });
-
-
-
-
-Route::post('/entry-store', function () {
-    return view('admin.form-service-entry');
-})->name('entry.store');
-
-Route::put('/entry-update', function () {
-    return view('admin.form-service-entry');
-})->name('entry.update');
-
