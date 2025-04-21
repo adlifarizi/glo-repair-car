@@ -40,11 +40,13 @@ class EntriServisController extends Controller
     public function showByPlatNo(Request $request)
     {
         $plat_no = $request->input('plat_no');
-        $data = Entri_Servis::where('plat_no', $plat_no)->get();
+        $data = Entri_Servis::where('plat_no', $plat_no)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
         if ($data->isEmpty()) {
             return response()->json([
-                'message' => 'Data dengan plat nomor tersebut tidak ditemukan'
+                'message' => 'Data yang Anda Cari Tidak Ditemukan'
             ], 404);
         }
 
@@ -85,17 +87,17 @@ class EntriServisController extends Controller
     {
         // Debug: Lihat apakah request masuk
         Log::info($request->all());
-    
+
         // Temukan data berdasarkan ID
         $entriServis = Entri_Servis::find($id);
-    
+
         // Jika tidak ditemukan, kirim response error
         if (!$entriServis) {
             return response()->json([
                 'message' => 'Data entri servis tidak ditemukan'
             ], 404);
         }
-    
+
         // Validasi input
         $request->validate([
             'plat_no' => 'sometimes|string|max:255',
@@ -107,10 +109,10 @@ class EntriServisController extends Controller
             'harga' => 'sometimes|integer|min:0',
             'tanggal_selesai' => 'sometimes|date',
         ]);
-    
+
         // Update data dengan input yang diberikan
         $entriServis->update($request->except('_method'));
-    
+
         return response()->json([
             'message' => 'Entri servis berhasil diperbarui',
             'data' => $entriServis
@@ -121,36 +123,36 @@ class EntriServisController extends Controller
     {
         // Debug log (opsional)
         Log::info("Request Delete Entri Servis ID: $id");
-    
+
         // Cari entri_servis berdasarkan ID
         $entriServis = Entri_Servis::find($id);
-    
+
         if (!$entriServis) {
             return response()->json([
                 'message' => 'Data entri servis tidak ditemukan'
             ], 404);
         }
-    
+
         // Ambil semua data pemasukan yang terkait dengan entri_servis ini
         $pemasukanList = Pemasukan::where('id_servis', $id)->get();
-    
+
         // Loop dan hapus masing-masing file + record pemasukan
         foreach ($pemasukanList as $pemasukan) {
             if ($pemasukan->bukti_pemasukan) {
                 $path = str_replace('/storage/', '', $pemasukan->bukti_pemasukan);
                 Storage::disk('public')->delete($path);
             }
-    
+
             $pemasukan->delete();
         }
-    
+
         // Hapus entri_servis
         $entriServis->delete();
-    
+
         return response()->json([
             'message' => 'Entri servis dan semua data pemasukan terkait berhasil dihapus'
         ], 200);
     }
-    
-    
+
+
 }

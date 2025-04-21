@@ -30,7 +30,7 @@
     @vite('resources/css/app.css')
 
     <!-- Global Javascript -->
-    <script src="{{ asset('js/global.js') }}" defer></script>
+    <script src="{{ asset('js/admin/app.js') }}" defer></script>
 </head>
 
 <body>
@@ -82,7 +82,7 @@
 
                         <!-- Submit button -->
                         <button type="submit" id="submit-button"
-                            class="w-full bg-gray-800 hover:bg-gray-700 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+                            class="w-full bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
                             <span id="submit-button-text">Login</span>
                             <div id="spinner" class="hidden" role="status">
                                 <i class="fa-solid fa-spinner animate-spin"></i>

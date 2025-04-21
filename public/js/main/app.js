@@ -67,6 +67,30 @@ function showConfirmDeleteDialog(id, title = null, message = null) {
     dialog.classList.remove('hidden');
 }
 
+function showProgressTrackerErrorDialog(id, message = null, subMessage = null) {
+    const dialog = document.getElementById(id);
+    if (!dialog) return;
+
+    const messageEl = dialog.querySelector('p'); // Ini ambil <p> pertama (pastikan ini memang message utamanya)
+    const subMessageEl = dialog.querySelector('#subMessage');
+
+    if (message && messageEl) {
+        messageEl.textContent = message;
+    }
+
+    if (subMessageEl) {
+        if (subMessage) {
+            subMessageEl.textContent = subMessage;
+            subMessageEl.style.display = 'block';
+        } else {
+            subMessageEl.style.display = 'none';
+        }
+    }
+
+    dialog.classList.remove('hidden');
+}
+
+
 function handleBackdropClick(event, dialogId) {
     const content = document.getElementById(dialogId + '-content');
     if (!content.contains(event.target)) {

@@ -5,8 +5,8 @@
                 Glo Repair Car
             </p>
             <p class="text-sm font-normal text-white">
-                Lorem ipsum dolor sit amet consectetur. In aliquam sodales eros id. Sed elit mattis vel viverra feugiat
-                aliquam.
+                Kami berkomitmen memberikan layanan terbaik dalam perawatan dan perbaikan kendaraan Anda. Kepuasan dan
+                kenyamanan pelanggan adalah prioritas utama kami.
             </p>
         </div>
 
@@ -86,7 +86,7 @@
         </div>
     </div>
 
-    <div class="w-full mt-8 py-2 text-center text-white bg-red-700/90 text-sm">
+    <div class="w-full mt-8 py-2 text-center text-white bg-red-700/70 text-sm">
         © {{ date('Y') }} Glo Repair Car
     </div>
 </footer>

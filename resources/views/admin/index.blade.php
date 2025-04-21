@@ -100,6 +100,7 @@
                             <img src="{{ asset('icons/legend-pengeluaran.svg') }}" class="w-8 h-8"> Pengeluaran
                         </div>
                     </div>
+                    <a class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Export PDF</a>
                 </div>
 
                 <!-- Entri Servis -->
@@ -153,7 +154,7 @@
                         @endforeach
                     </div>
 
-                    <a href="#" class="bg-gray-800 text-white rounded px-6 py-2 cursor-pointer">Lihat semua</a>
+                    <a href="/kelola-ulasan" class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Lihat semua</a>
                 </div>
 
 
@@ -179,7 +180,7 @@
                         @endforeach
                     </div>
 
-                    <a class="bg-gray-800 text-white rounded px-6 py-2 cursor-pointer">Lihat semua</a>
+                    <a href="/kelola-chat" class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Lihat semua</a>
                 </div>
             </div>
         </div>

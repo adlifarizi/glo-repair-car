@@ -6,6 +6,10 @@ $(document).ready(function () {
     let isMapLoading = true;       // Track loading state for map
     let isContactLoading = true;   // Track loading state for contact info
 
+    let fetchedCity = '';
+    let fetchedAddress = '';
+    let fetchedPhone = '';
+
     const redIcon = new L.Icon({
         iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
         shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
@@ -19,27 +23,21 @@ $(document).ready(function () {
     function initMap() {
         // Add shimmer effects before map loads
         addLoadingEffects();
-
-        // Create the map
-        map = L.map('map').setView([selectedLat, selectedLng], 17);
-
-        // Remove default zoom controls
-        map.zoomControl.remove();
-
+    
+        // Create the map WITHOUT initial view
+        map = L.map('map', {
+            zoomControl: false
+        });
+    
         // Add tile layer
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap contributors'
         }).addTo(map);
-
-        // Add initial marker
-        marker = L.marker([selectedLat, selectedLng], {
-            icon: redIcon
-        }).addTo(map);
-
+    
         // Fetch data from APIs
         fetchMapData();
         fetchContactData();
-    }
+    }    
 
     // Add shimmer loading effects
     function addLoadingEffects() {
@@ -52,6 +50,8 @@ $(document).ready(function () {
         if (!isMapLoading && !isContactLoading) {
             $('.contact-info-container').removeClass('animate-pulse');
             $('.contact-info-container *').css('color', '');
+
+            updateMarkerPopup(fetchedCity, fetchedAddress, fetchedPhone);
         }
     }
 
@@ -108,22 +108,21 @@ $(document).ready(function () {
             success: function (data) {
                 if (data) {
                     // Extract address components
-                    const address = data.display_name || 'Jl. Malabar, RT.01/RW.08, Babakan, Kecamatan Bogor Tengah, 16129';
-                    const city = data.address.city || data.address.town || data.address.village || 'Bogor';
+                    fetchedAddress = data.display_name || 'Belum ada alamat';
+                    fetchedCity = data.address.city || data.address.town || data.address.village || 'Belum ada alamat';
 
-                    // Update marker popup with address information
-                    updateMarkerPopup(city + ', Indonesia', address);
-
-                    // Update contact info in the DOM
-                    $('.contact-address').text(address);
+                    $('.contact-address').text(fetchedAddress);
                 }
+
+                isMapLoading = false;
+                checkAndRemoveLoadingEffects();
             },
             error: function (xhr) {
                 console.error('Error in reverse geocoding:', xhr);
 
                 // Use default values if geocoding fails
-                const defaultAddress = 'Jl. Malabar, RT.01/RW.08, Babakan, Kecamatan Bogor Tengah, 16129';
-                const defaultCity = 'Bogor, Indonesia';
+                const defaultAddress = 'Belum ada alamat';
+                const defaultCity = 'Belum ada alamat';
 
                 updateMarkerPopup(defaultCity, defaultAddress);
                 $('.contact-address').text(defaultAddress);
@@ -142,20 +141,11 @@ $(document).ready(function () {
             success: function (response) {
                 if (response && response.data) {
                     // Extract contact data
-                    const email = response.data.email || 'glorepaircar@gmail.com';
-                    const phone = response.data.nomor_telepon || response.data.nomor_whatsapp || '+62 81234567890';
+                    const email = response.data.email || 'belum ada email';
+                    fetchedPhone = response.data.nomor_telepon || response.data.nomor_whatsapp || 'belum ada nomor telepon';
 
-                    // Update contact info in the DOM
                     $('.contact-email').text(email);
-                    $('.contact-phone').text(phone);
-
-                    // Update phone in marker popup if it exists
-                    if (marker && marker.getPopup()) {
-                        const popup = marker.getPopup();
-                        const content = popup.getContent();
-                        const updatedContent = content.replace(/\+62 \d+/, phone);
-                        popup.setContent(updatedContent);
-                    }
+                    $('.contact-phone').text(fetchedPhone);
                 }
 
                 isContactLoading = false;
@@ -173,23 +163,33 @@ $(document).ready(function () {
     // Update marker popup with contact information
     function updateMarkerPopup(city, address, phone = null) {
         if (!phone) {
-            // If phone is not provided, use default or get from DOM if available
-            phone = $('.contact-phone').text() || '+62 81234567890';
+            phone = $('.contact-phone').text() || 'belum ada nomor telepon';
         }
 
+        // Tambahkan +62 kalau belum ada
+        if (phone && phone !== 'belum ada nomor telepon' && !phone.startsWith('+62')) {
+            phone = '+62 ' + phone.replace(/^0/, ''); // Ubah 0812 jadi +62 812
+        }
+
+        const popupContent = `
+            <b>${city}, Indonesia</b><br>
+            <span style="display: flex; align-items: center; gap: 6px;">
+                <span class="text-end">${address}</span>
+                <img src="/icons/contact-map.svg" width="auto" height="36" alt="Alamat">
+            </span><br>
+            <span style="display: flex; align-items: center; gap: 6px;">
+                <span>${phone}</span>
+                <img src="/icons/contact-phone.svg" width="auto" height="36" alt="Telepon">
+            </span><br>
+            <a href="https://www.google.com/maps/dir/?api=1&destination=${selectedLat},${selectedLng}" target="_blank" class="text-red-500 underline">🔗 Rute ke Lokasi</a>
+        `;
+
         if (marker) {
-            marker.bindPopup(`
-                <b>${city}</b><br>
-                <span style="display: flex; align-items: center; gap: 6px;">
-                    <span class="text-end">${address}</span>
-                    <img src="/icons/contact-map.svg" width="auto" height="36" alt="Alamat">
-                </span><br>
-                <span style="display: flex; align-items: center; gap: 6px;">
-                    <span>${phone}</span>
-                    <img src="/icons/contact-phone.svg" width="auto" height="36" alt="Telepon">
-                </span><br>
-                <a href="https://www.google.com/maps/dir/?api=1&destination=${selectedLat},${selectedLng}" target="_blank" class="text-red-500 underline">🔗 Rute ke Lokasi</a>
-            `).openPopup();
+            if (marker.getPopup()) {
+                marker.setPopupContent(popupContent).openPopup();
+            } else {
+                marker.bindPopup(popupContent).openPopup();
+            }
         }
     }
 

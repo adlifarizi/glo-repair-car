@@ -2,7 +2,7 @@
 
     <!-- Chat Window -->
     <div x-show="open" x-transition
-        class="fixed flex flex-col bottom-24 right-4 w-80 h-[70svh] rounded-2xl bg-white overflow-hidden z-40 shadow-[0_3px_6px_rgba(0,0,0,0.12),3px_0_6px_rgba(0,0,0,0.06),-3px_0_6px_rgba(0,0,0,0.06)]">
+        class="fixed flex flex-col bottom-24 right-4 w-80 md:w-[400px] h-[70svh] rounded-2xl bg-white overflow-hidden z-40 shadow-[0_3px_6px_rgba(0,0,0,0.12),3px_0_6px_rgba(0,0,0,0.06),-3px_0_6px_rgba(0,0,0,0.06)]">
         <div class="bg-red-700 text-white p-3 font-bold text-center">
             Admin
         </div>
@@ -15,27 +15,27 @@
 
             <!-- Admin Message -->
             <div class="self-start max-w-[70%] bg-gray-200 text-black p-2 rounded-xl rounded-bl-none">
-                GAK BOLEH!!!!
+                Ada apa?
             </div>
 
             <!-- User Message -->
             <div class="self-end max-w-[70%] bg-red-500 text-white p-2 rounded-xl rounded-br-none">
-                Halo admin, saya mau nanya?
+                Apakah servis di hari kamis tersedia?
             </div>
 
             <!-- Admin Message -->
             <div class="self-start max-w-[70%] bg-gray-200 text-black p-2 rounded-xl rounded-bl-none">
-                GAK BOLEH!!!!
+                Tersedia kak, bisa langsung datang ke bengkel ya
             </div>
 
             <!-- User Message -->
             <div class="self-end max-w-[70%] bg-red-500 text-white p-2 rounded-xl rounded-br-none">
-                Halo admin, saya mau nanya?
+                Terima kasih
             </div>
 
             <!-- Admin Message -->
             <div class="self-start max-w-[70%] bg-gray-200 text-black p-2 rounded-xl rounded-bl-none">
-                GAK BOLEH!!!!
+                Sama sama
             </div>
         </div>
 

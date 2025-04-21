@@ -4,6 +4,9 @@
 
 @section('content')
     <div>
+        <!-- Dialog -->
+        @include('main.components.progress-tracker-error-dialog', ['id' => 'dialog-error', 'show' => false, 'message' => 'Data yang Anda Cari Tidak Ditemukan'])
+
         <!-- Hero -->
         <section class="flex justify-center items-center bg-hero-image bg-cover h-72 md:h-96">
             <div class="flex flex-col gap-12 justify-center items-center">
@@ -28,19 +31,24 @@
 
                 <!-- Input Plat -->
                 <div class="flex items-center border border-gray-300 rounded py-2 w-full sm:w-9/12">
-                    <input type="text" placeholder="Masukkan Nomor Plat Anda"
+                    <input id="plat_no" type="text" placeholder="Masukkan Nomor Plat Anda"
                         class="px-2 text-left sm:text-center w-full text-base text-black placeholder-gray-500 focus:outline-none" />
-                    <button class="px-2">
+                    <button id="search_button" class="px-2">
                         <i class='bx bx-search'></i>
                     </button>
                 </div>
 
-                <button
-                    class="w-fit bg-red-500 hover:bg-red-700 text-white py-2 px-12 rounded transition duration-200 whitespace-nowrap select-none">
-                    Lacak Progress
+                <button id="submit-button"
+                    class="w-48 md:w-64 bg-red-500 hover:bg-red-700 text-white py-2 px-12 rounded transition duration-200 whitespace-nowrap select-none">
+                    <span id="submit-button-text">Lacak Progress</span>
+                    <div id="spinner" class="hidden" role="status">
+                        <i class="fa-solid fa-spinner animate-spin"></i>
+                    </div>
                 </button>
 
-                @include('main.components.progress-tracker')
+                <div id="progress_tracker" class="w-full hidden">
+                    @include('main.components.progress-tracker')
+                </div>
 
             </div>
         </section>
@@ -63,8 +71,8 @@
                             Perbaikan Kendaraan
                         </h5>
                         <p class="text-base text-end text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur. Lorem amet metus elit rhoncus tincidunt. Quis tempus
-                            molestie turpis in lorem cursus condimentum at.
+                            Kami menangani berbagai jenis perbaikan mulai dari mesin, rem, suspensi hingga kelistrikan.
+                            Kendaraan Anda akan ditangani oleh mekanik berpengalaman dengan alat modern.
                         </p>
                     </div>
 
@@ -74,8 +82,8 @@
                             Mekanik Ahli
                         </h5>
                         <p class="text-base text-end text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur. Lorem amet metus elit rhoncus tincidunt. Quis tempus
-                            molestie turpis in lorem cursus condimentum at.
+                            Tim kami terdiri dari mekanik bersertifikasi yang siap memberikan solusi terbaik untuk segala
+                            jenis kerusakan kendaraan Anda.
                         </p>
                     </div>
 
@@ -85,8 +93,7 @@
                             Pemantauan Progress
                         </h5>
                         <p class="text-base text-end text-gray-600">
-                            Lorem ipsum dolor sit amet consectetur. Lorem amet metus elit rhoncus tincidunt. Quis tempus
-                            molestie turpis in lorem cursus condimentum at.
+                            Pantau perkembangan servis kendaraan Anda melalui website kami.
                         </p>
                     </div>
                 </div>
@@ -106,28 +113,28 @@
                 <!-- Daftar Layanan -->
                 <div class="grid grid-cols-2 gap-3">
                     <div class="flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                        <img src="{{ asset('images/ruang-tunggu.png') }}" class="object-cover rounded-t-lg">
+                        <img src="{{ asset('images/layanan-penunjang-ruang-tunggu.png') }}" class="object-cover rounded-t-lg">
                         <h5 class="text-base md:text-xl font-base text-end text-black py-4">
                             Ruang Tunggu
                         </h5>
                     </div>
 
                     <div class="flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                        <img src="{{ asset('images/wifi-gratis.png') }}" class="object-cover rounded-t-lg">
+                        <img src="{{ asset('images/layanan-penunjang-wifi-gratis.png') }}" class="object-cover rounded-t-lg">
                         <h5 class="text-base md:text-xl font-base text-end text-black py-4">
                             Wifi Gratis
                         </h5>
                     </div>
 
                     <div class="flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                        <img src="{{ asset('images/garansi-servis.png') }}" class="object-cover rounded-t-lg">
+                        <img src="{{ asset('images/layanan-penunjang-garansi-servis.png') }}" class="object-cover rounded-t-lg">
                         <h5 class="text-base md:text-xl font-base text-end text-black py-4">
                             Garansi Servis
                         </h5>
                     </div>
 
                     <div class="flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                        <img src="{{ asset('images/garansi-servis.png') }}" class="object-cover rounded-t-lg">
+                        <img src="{{ asset('images/layanan-penunjang-sparepart.png') }}" class="object-cover rounded-t-lg">
                         <h5 class="text-base md:text-xl font-base text-end text-black py-4">
                             Sparepart Original
                         </h5>
@@ -179,58 +186,17 @@
                 </h2>
 
                 <!-- Swiper Container -->
-                <div class="swiper testimoniSwiper w-full">
-                    <div class="swiper-wrapper">
-                        <!-- Item Testimoni -->
-                        <div
-                            class="swiper-slide px-4 py-6 flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                            <div class="flex items-center">
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                            </div>
-                            <p class="text-base font-base text-center text-black py-4">
-                                Lorem ipsum dolor sit amet consectetur. In aliquam sodales eros id. Sed elit mattis vel
-                                viverra feugiat aliquam.
-                            </p>
-                            <p class="text-base font-bold text-center text-black">Cynthia Octavania</p>
-                        </div>
-
-                        <div
-                            class="swiper-slide px-4 py-6 flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                            <div class="flex items-center">
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                            </div>
-                            <p class="text-base font-base text-center text-black py-4">
-                                Lorem ipsum dolor sit amet consectetur. In aliquam sodales eros id. Sed elit mattis vel
-                                viverra feugiat aliquam.
-                            </p>
-                            <p class="text-base font-bold text-center text-black">John Doe</p>
-                        </div>
-
-                        <div
-                            class="swiper-slide px-4 py-6 flex flex-col items-center border border-gray-300 shadow-sm rounded-lg w-full">
-                            <div class="flex items-center">
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                                <i class='bx bxs-star text-red-400'></i>
-                            </div>
-                            <p class="text-base font-base text-center text-black py-4">
-                                Lorem ipsum dolor sit amet consectetur. In aliquam sodales eros id. Sed elit mattis vel
-                                viverra feugiat aliquam.
-                            </p>
-                            <p class="text-base font-bold text-center text-black">Jane Smith</p>
-                        </div>
+                <div class="swiper testimonialSwiper w-full relative">
+                    <div class="swiper-wrapper" id="testimonial-wrapper">
+                        <!-- Add at least one placeholder slide -->
+                        <div class="swiper-slide">Loading...</div>
                     </div>
+
+                    <!-- Pagination -->
+                    <div class="swiper-pagination"></div>
                 </div>
+
+                <!-- Swiper Container -->
             </div>
         </section>
 
@@ -242,14 +208,67 @@
                     Temukan Kami
                 </h2>
 
-                <iframe class="w-full h-72 md:h-96"
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3963.4628677988408!2d106.80353987338422!3d-6.589245164409667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5d2e602b501%3A0x25a12f0f97fac4ee!2sSekolah%20Vokasi%20Institut%20Pertanian%20Bogor!5e0!3m2!1sid!2sid!4v1739615211587!5m2!1sid!2sid"
-                    style="border:0;" allowfullscreen="" loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <!-- Leaflet Map -->
+                <div id="map" class="w-full h-72 md:h-96"></div>
             </div>
         </section>
 
     </div>
+
+    <script src="{{ asset('js/main/progress-tracker.js') }}" defer></script>
+    <script src="{{ asset('js/main/home.js') }}" defer></script>
+
+    <style>
+        .testimonialSwiper .swiper-pagination {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .testimonialSwiper .swiper-slide {
+            margin-bottom: 20px;
+        }
+
+        /* Bullet aktif warna merah */
+        .swiper-pagination-bullet-active {
+            background-color: #ef4444; /* red-500 */
+            opacity: 1;
+        }
+
+        /* Custom style for fixed height text with line clamp */
+        .line-clamp-4 {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            min-height: 6rem; /* Adjust this value to match 4 lines of your text */
+            word-break: break-word; /* Memecah kata yang sangat panjang */
+            overflow-wrap: break-word; /* Alternatif untuk browser yang lebih baru */
+            word-wrap: break-word; /* Untuk kompatibilitas browser */
+        }
+    </style>
+
+    <style>
+        .leaflet-popup-content {
+            display: flex !important;
+            flex-direction: column !important;
+            justify-content: end !important;
+            align-items: end !important;
+        }
+
+        .leaflet-popup-content b {
+            color: #B30000 !important;
+            font-size: large !important;
+            font-weight: 600 !important;
+        }
+
+        .leaflet-control-zoom {
+           display: hidden !important
+        }
+    </style>
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -289,22 +308,5 @@
             observer.observe(document.querySelector("#counter-section"));
         });
     </script>
-
-    <script>
-        var swiper = new Swiper(".testimoniSwiper", {
-            slidesPerView: 1, // Default 1 untuk layar kecil
-            spaceBetween: 10, // Jarak antar item
-            loop: true, // Slide akan berulang
-            autoplay: {
-                delay: 3000, // Auto swipe tiap 3 detik
-                disableOnInteraction: false, // Tetap autoplay meski user interaksi
-            },
-            breakpoints: {
-                768: { slidesPerView: 2 }, // Medium screen: tampilkan 2 item
-                1024: { slidesPerView: 3 }, // Large screen: tampilkan 3 item
-            },
-        });
-    </script>
-
 
 @endsection
