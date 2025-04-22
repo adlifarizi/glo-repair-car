@@ -18,10 +18,10 @@
                         <div class="flex gap-3">
                             <div
                                 class="p-1 flex items-center justify-center w-12 h-12 text-red-300 text-center rounded-lg bg-red-700">
-                                <!-- <i class="fa-solid fa-users"></i> -->
+                                <img src="{{ asset('icons/stat-diperbaiki.svg') }}" class="w-10 h-10">
                             </div>
                             <div class="text-dark">
-                                <p class="text-lg font-medium">11 Mobil</p>
+                                <p class="text-lg font-medium"><span id="jumlah-perbaikan">0</span> Mobil</p>
                                 <p class="text-sm text-gray-500">Dalam perbaikan</p>
                             </div>
                         </div>
@@ -32,10 +32,10 @@
                         <div class="flex gap-3">
                             <div
                                 class="p-1 flex items-center justify-center w-12 h-12 text-red-300 text-center rounded-lg bg-red-700">
-                                <!-- <i class="fa-solid fa-users"></i> -->
+                                <img src="{{ asset('icons/stat-selesai.svg') }}" class="w-10 h-10">
                             </div>
                             <div class="text-dark">
-                                <p class="text-lg font-medium">128 Transaksi</p>
+                                <p class="text-lg font-medium"><span id="jumlah-selesai">0</span> Transaksi</p>
                                 <p class="text-sm text-gray-500">Terselesaikan</p>
                             </div>
                         </div>
@@ -46,10 +46,10 @@
                         <div class="flex gap-3">
                             <div
                                 class="p-1 flex items-center justify-center w-12 h-12 text-red-300 text-center rounded-lg bg-red-700">
-                                <!-- <i class="fa-solid fa-users"></i> -->
+                                <img src="{{ asset('icons/stat-rating.svg') }}" class="w-10 h-10">
                             </div>
                             <div class="text-dark">
-                                <p class="text-lg font-medium">4.8</p>
+                                <p class="text-lg font-medium"><span id="rating-bengkel">0</span></p>
                                 <p class="text-sm text-gray-500">Rating Bengkel</p>
                             </div>
                         </div>
@@ -60,10 +60,10 @@
                         <div class="flex gap-3">
                             <div
                                 class="p-1 flex items-center justify-center w-12 h-12 text-red-300 text-center rounded-lg bg-red-700">
-                                <!-- <i class="fa-solid fa-users"></i> -->
+                                <img src="{{ asset('icons/stat-pemasukan.svg') }}" class="w-10 h-10">
                             </div>
                             <div class="text-dark">
-                                <p class="text-lg font-medium text-green-500">Rp23.000.000</p>
+                                <p class="text-lg font-medium text-green-500">Rp<span id="pemasukan-bulan-ini">0</span></p>
                                 <p class="text-sm text-gray-500">Pemasukan Bulan Ini</p>
                             </div>
                         </div>
@@ -74,10 +74,10 @@
                         <div class="flex gap-3">
                             <div
                                 class="p-1 flex items-center justify-center w-12 h-12 text-red-300 text-center rounded-lg bg-red-700">
-                                <!-- <i class="fa-solid fa-users"></i> -->
+                                <img src="{{ asset('icons/stat-pengeluaran.svg') }}" class="w-10 h-10">
                             </div>
                             <div class="text-dark">
-                                <p class="text-lg font-medium text-red-500">Rp10.000.000</p>
+                                <p class="text-lg font-medium text-red-500">Rp<span id="pengeluaran-bulan-ini">0</span></p>
                                 <p class="text-sm text-gray-500">Pengeluaran Bulan Ini</p>
                             </div>
                         </div>
@@ -100,7 +100,7 @@
                             <img src="{{ asset('icons/legend-pengeluaran.svg') }}" class="w-8 h-8"> Pengeluaran
                         </div>
                     </div>
-                    <a class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Export PDF</a>
+                    <a href="/generate-laporan" class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Export PDF</a>
                 </div>
 
                 <!-- Entri Servis -->
@@ -136,22 +136,12 @@
                 <div class="w-full md:w-[40%] bg-white rounded-xl p-4 flex flex-col items-start gap-4">
                     <p class="font-semibold text-xl">Ulasan Terbaru</p>
 
-                    <!-- Review List -->
-                    <div class="flex flex-col gap-3 w-full">
-                        @foreach ([
-                            'Pelanggan Wang Yiren memberikan ulasan, "Servis sangat memuaskan dan cepat, teknisi sangat ramah!"',
-                            'Pelanggan Lee Ji-eun bilang, "Pengalaman terbaik! Akan kembali lagi ke sini!"',
-                            'Pelanggan Johnny Wang menulis, "Hasil servis sangat memuaskan dan sesuai ekspektasi."',
-                            'Pelanggan Karina menyampaikan, "Teknisi datang tepat waktu dan pengerjaan cepat."',
-                            'Pelanggan Baekhyun berkata, "Layanan oke banget! Sangat direkomendasikan."'
-                        ] as $review)
-                            <div class="inline-flex items-center gap-2 text-gray-800 overflow-hidden group">
-                                <i class="fa-solid fa-star shrink-0"></i>
-                                <p class="line-clamp-1">
-                                    Rating 5 bintang: {{ $review }}
-                                </p>
-                            </div>
-                        @endforeach
+                    <!-- Review List Container -->
+                    <div class="flex flex-1 flex-col items-center justify-center gap-3 w-full" id="ulasan-container">
+                        <!-- Placeholder saat loading -->
+                        <div class="text-center py-4">
+                            <i class="fas fa-spinner fa-spin"></i> Memuat ulasan...
+                        </div>
                     </div>
 
                     <a href="/kelola-ulasan" class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Lihat semua</a>
@@ -186,125 +176,5 @@
         </div>
     </div>
 
-    <script>
-        const ctx = document.getElementById('financeChart').getContext('2d');
-        const financeChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
-                datasets: [
-                    {
-                        label: 'Pemasukan',
-                        data: [257000000, 230000000, 165000000, 175000000, 185000000, 210000000, 250000000, 40000000],
-                        radius: 4,
-                        borderColor: 'rgba(137, 121, 255, 1)',
-                        borderWidth: 2,
-                        backgroundColor: 'rgba(99, 102, 241, 0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(255, 255, 255, 1)'
-                    },
-                    {
-                        label: 'Pengeluaran',
-                        data: [105000000, 98000000, 95000000, 115000000, 100000000, 110000000, 135000000, 20000000],
-                        radius: 4,
-                        borderColor: 'rgba(255, 146, 138, 1)',
-                        borderWidth: 2,
-                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                        tension: 0.4,
-                        pointBackgroundColor: 'rgba(255, 255, 255, 255)'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let value = context.raw.toLocaleString('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR'
-                                });
-                                return `${context.dataset.label}: ${value}`;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        ticks: {
-                            callback: function (value) {
-                                return 'Rp' + value.toLocaleString('id-ID');
-                            }
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-
-
-    <script>
-        const ctx2 = document.getElementById('serviceChart').getContext('2d');
-
-        const totalServis = 93;
-
-        const serviceChart = new Chart(ctx2, {
-            type: 'doughnut',
-            data: {
-                labels: ['Dalam antrian', 'Dalam perbaikan', 'Selesai'],
-                datasets: [{
-                    data: [7, 11, 8],
-                    backgroundColor: ['#FF928A', '#FFAE4C', '#8979FF'],
-                    borderWidth: 0,
-                }]
-            },
-            options: {
-                cutout: '60%',
-                responsive: true,
-                plugins: {
-                    legend: {
-                        display: false,
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function (context) {
-                                let total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                let value = context.raw;
-                                let percentage = ((value / total) * 100).toFixed(2);
-                                return `${context.label}: ${value} (${percentage}%)`;
-                            }
-                        }
-                    },
-                    centerText: {
-                        display: true,
-                        text: totalServis
-                    }
-                }
-            },
-            plugins: [{
-                id: 'centerText',
-                beforeDraw: (chart) => {
-                    if (chart.config.options.plugins.centerText.display !== false) {
-                        const { width, height, ctx } = chart;
-                        const text = chart.config.options.plugins.centerText.text;
-
-                        ctx.restore();
-                        ctx.font = 'bold 28px sans-serif';
-                        ctx.fillStyle = '#111827';
-                        ctx.textBaseline = 'middle';
-
-                        const textX = (width - ctx.measureText(text).width) / 2;
-                        const textY = height / 2;
-
-                        ctx.fillText(text, textX, textY);
-                        ctx.save();
-                    }
-                }
-            }]
-        });
-    </script>
+    <script src="{{ asset('js/admin/dashboard.js') }}" defer></script>
 @endsection

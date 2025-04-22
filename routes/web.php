@@ -1,13 +1,26 @@
 <?php
 
-use App\Http\Middleware\CheckSanctumToken;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 
+
+/*
+|--------------------------------------------------------------------------
+| Route Home
+|--------------------------------------------------------------------------
+*/
 Route::get('/', function () {
     return view('main.index');
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Layanan
+|--------------------------------------------------------------------------
+*/
 Route::get('/layanan', function () {
     return view('main.layanan');
 });
@@ -34,20 +47,36 @@ Route::get('/kontak', function () {
     return view('main.kontak');
 });
 
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Login
+|--------------------------------------------------------------------------
+*/
 // Admin Route
 Route::get('/login', function () {
     return view('admin.layouts.login');
-});
-
-Route::get('/dashboard', function () {
-    return view('admin.index');
 });
 
 
 
 /*
 |--------------------------------------------------------------------------
-| Route Entri Servis
+| Route Dashboard
+|--------------------------------------------------------------------------
+*/
+Route::get('/dashboard', function () {
+    return view('admin.index');
+});
+
+Route::get('/generate-laporan', [AdminController::class, 'generatePDF']);
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Route Kelola Entri Servis
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-entri-servis', function () {
