@@ -62,7 +62,29 @@
     <script src="{{ asset('js/admin/app.js') }}" defer></script>
 </head>
 
+<script>
+    $(document).ready(function () {
+        const hasToken = localStorage.getItem('access_token') || sessionStorage.getItem('access_token');
+
+        if (!hasToken) {
+            // Jika tidak ada token, arahkan kembali ke login
+            window.location.href = window.location.origin + "/login";
+        }
+    });
+</script>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'Authorization': 'Bearer ' + (localStorage.getItem('access_token') || sessionStorage.getItem('access_token'))
+        }
+    });
+</script>
+
 <body class="flex" x-data="{ sidebarOpen: false }">
+
+    <!-- Dialog -->
+    @include('admin.components.dialog', ['id' => 'dialog-confirm-logout', 'show' => false, 'type' => 'confirm-logout', 'message' => 'Anda yakin ingin logout?'])
 
     <!-- Sidebar Mobile (Overlay) -->
     <div class="fixed inset-0 z-50 flex md:hidden" x-show="sidebarOpen"

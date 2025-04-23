@@ -15,6 +15,17 @@ class AuthController extends Controller
     // Registrasi Admin
     public function register(Request $request): JsonResponse
     {
+
+        // Cek apakah environment adalah production
+        if (app()->environment('production')) {
+            return response()->json(['error' => 'Registrasi admin tidak diizinkan di environment production.'], 403);
+        }
+
+        // Cek apakah sudah ada admin
+        if (Admin::count() > 0) {
+            return response()->json(['error' => 'Akun admin sudah ada. Tidak bisa membuat lebih dari satu akun.'], 403);
+        }
+
         // Validasi input
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
@@ -83,6 +94,7 @@ class AuthController extends Controller
                 'access_token' => $token,
                 'token_type' => 'Bearer',
                 'admin_id' => $admin->id,
+                'admin_name' => $admin->name,
             ]);
         } catch (\Exception $e) {
             return response()->json([

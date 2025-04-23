@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    // Periksa token di localStorage atau sessionStorage
+    if (localStorage.getItem('access_token') || sessionStorage.getItem('access_token')) {
+        // Token ditemukan, arahkan ke dashboard daripada login ulang
+        window.location.href = window.location.origin + "/dashboard";
+    }
+
     // Form submit handler
     $('#login-form').on('submit', function (e) {
         e.preventDefault();
@@ -10,6 +16,7 @@ $(document).ready(function () {
         var formData = {
             email: $('#email').val(),
             password: $('#password').val(),
+            remember: $('#remember_me').is(':checked') ? 1 : 0,
         };
 
         // Kirim request AJAX
@@ -22,13 +29,20 @@ $(document).ready(function () {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             success: function (response) {
+                console.log(response)
                 hideSubmitSpinner('submit-button', 'spinner');
                 showDialog('dialog-success');
 
-                // Simpan token
-                localStorage.setItem('access_token', response.access_token);
+                // Simpan token sesuai dengan 'remember'
+                if (formData.remember) {
+                    localStorage.setItem('access_token', response.access_token);  // Simpan di localStorage jika remember me
+                    localStorage.setItem('admin_name', response.admin_name);
+                } else {
+                    sessionStorage.setItem('access_token', response.access_token);  // Simpan di sessionStorage jika tidak remember me
+                    sessionStorage.setItem('admin_name', response.admin_name);
+                }
 
-                // Arahkan ke dashboard atau halaman utama
+                // Arahkan ke dashboard     atau halaman utama
                 window.location.href = window.location.origin + "/dashboard";
             },
             error: function (xhr) {

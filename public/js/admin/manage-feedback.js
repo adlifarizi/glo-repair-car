@@ -58,7 +58,7 @@ function loadData() {
 // Fungsi confirmDelete yang dipanggil saat tombol "Hapus" ditekan
 function confirmDelete(id) {
     selectedFeedbackId = id;
-    showDialog('dialog-confirm-delete', 'Yaking ingin menghapus ulasan ini?');
+    showDialog('dialog-confirm-delete', 'Yakin ingin menghapus ulasan ini?');
 }
 
 function toggleVisibility(id, currentStatus) {

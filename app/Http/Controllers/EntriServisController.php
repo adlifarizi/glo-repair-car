@@ -102,9 +102,6 @@ class EntriServisController extends Controller
         ], 201);
     }
 
-
-    use Carbon\Carbon;
-
     public function update(Request $request, $id)
     {
         // Debug: Lihat apakah request masuk

@@ -1,5 +1,5 @@
 <!-- resources/views/components/admin-header.blade.php -->
-<div class="p-4 bg-red-700 flex items-center justify-between text-white">
+<div class="p-4 bg-red-700 flex items-center justify-between text-white" x-data="{ adminName: localStorage.getItem('admin_name') || 'admin' }">
     <!-- Hamburger Button (mobile only) -->
     <button class="md:hidden" @click="sidebarOpen = true">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -16,5 +16,5 @@
     </div>
 
     <!-- Right side -->
-    <p>Halo, admin</p>
+    <p x-text="`Halo, ${adminName}`"></p>
 </div>

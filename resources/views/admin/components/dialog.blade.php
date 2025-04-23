@@ -12,6 +12,9 @@
         @elseif($type === 'confirm-delete')
             <i class="fa-regular fa-circle-question text-7xl text-[#EEC9AA]"></i>
             <h2 class="text-2xl text-gray-900 font-semibold">Konfirmasi Penghapusan</h2>
+        @elseif($type === 'confirm-logout')
+            <i class="fa-regular fa-circle-question text-7xl text-[#EEC9AA]"></i>
+            <h2 class="text-2xl text-gray-900 font-semibold">Konfirmasi Logout</h2>
         @elseif($type === 'loading')
             <i class="fa-solid fa-spinner text-7xl text-gray-400 animate-spin"></i>
             <h2 class="text-2xl text-gray-900 font-semibold">Loading...</h2>
@@ -24,6 +27,13 @@
                 <button onclick="document.dispatchEvent(new CustomEvent('delete-confirmed'))"
                     class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Hapus</button>
                 <button onclick="document.dispatchEvent(new CustomEvent('delete-cancelled'))"
+                    class="px-4 py-2 border border-red-500 text-red-500 rounded hover:bg-red-50">Batal</button>
+            </div>
+        @elseif($type === 'confirm-logout')
+            <div class="flex gap-2">
+                <button onclick="document.dispatchEvent(new CustomEvent('logout-confirmed'))"
+                    class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600">Yakin</button>
+                <button onclick="document.dispatchEvent(new CustomEvent('logout-cancelled'))"
                     class="px-4 py-2 border border-red-500 text-red-500 rounded hover:bg-red-50">Batal</button>
             </div>
         @else

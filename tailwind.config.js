@@ -8,6 +8,25 @@ export default {
         './resources/**/*.blade.php',
         './resources/**/*.js',
         './resources/**/*.vue',
+        './resources/**/*.css',
+    ],
+    safelist: [
+        'bg-green-600',
+        'bg-gray-300',
+        'text-green-600',
+        'text-gray-500',
+        'text-gray-800',
+        'text-gray-700',
+        'grid-cols-[auto_min-content_auto]',
+        'h-[1px]',
+        'absolute',
+        'left-0',
+        'top-0',
+        'w-1',
+        'h-10',
+        'my-2',
+        'mx-4',
+        'relative',
     ],
     theme: {
         extend: {
@@ -21,9 +40,9 @@ export default {
                 'red-700': '#B30000',
             },
             backgroundImage: {
-                'hero-image': "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/public/images/hero-bg.png')",
-                'footer-image': "linear-gradient(rgba(50, 50, 50, 0.8), rgba(50, 50, 50, 0.8)), url('/public/images/footer-bg.png')",
-                'chat-admin': "url('/public/images/bg-chat-admin.png')",
+                'hero-image': "linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)), url('/images/hero-bg.png')",
+                'footer-image': "linear-gradient(rgba(50, 50, 50, 0.8), rgba(50, 50, 50, 0.8)), url('/images/footer-bg.png')",
+                'chat-admin': "url('/images/bg-chat-admin.png')",
             },
             keyframes: {
                 typing: {

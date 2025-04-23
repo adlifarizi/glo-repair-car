@@ -64,7 +64,7 @@ function loadData() {
 // Fungsi confirmDelete yang dipanggil saat tombol "Hapus" ditekan
 function confirmDelete(id) {
     selectedServiceEntryId = id;
-    showDialog('dialog-confirm-delete', 'Yaking ingin menghapus entri servis ini?');
+    showDialog('dialog-confirm-delete', 'Yakin ingin menghapus entri servis ini?');
 }
 
 // Helper function to format number (currency format)
