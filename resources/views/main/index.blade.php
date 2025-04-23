@@ -209,7 +209,7 @@
                 </h2>
 
                 <!-- Leaflet Map -->
-                <div id="map" class="w-full h-72 md:h-96"></div>
+                <div id="map" class="w-full h-72 md:h-96 z-40"></div>
             </div>
         </section>
 

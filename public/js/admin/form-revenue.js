@@ -33,8 +33,8 @@ $(document).ready(function () {
         const url = mode === 'edit' ? `/api/pemasukan/${pemasukanId}` : '/api/pemasukan';
         const action = mode === 'edit' ? 'diubah' : 'ditambahkan';
 
-         // Add _method field for Laravel to handle PUT requests
-         if (mode === 'edit') {
+        // Add _method field for Laravel to handle PUT requests
+        if (mode === 'edit') {
             formData.append('_method', 'PUT');
         }
 
@@ -72,43 +72,58 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 if (response && response.data) {
-                    // Isi form dengan data yang diterima
-                    $('#id_servis').val(response.data.id_servis || '');
-                    $('#nominal').val(response.data.nominal || '');
+                    const data = response.data;
 
-                    // Format tanggal jika perlu
-                    if (response.data.tanggal_pemasukan) {
-                        // Extract date part if it's a datetime string
-                        const dateString = response.data.tanggal_pemasukan;
-                        // Parse and set the date correctly for flatpickr
-                        const dateOnly = dateString.split(' ')[0]; // Get just the date part
+                    // Ambil detail entri servis (karena dari pemasukan tidak lengkap)
+                    if (data.id_servis) {
+                        $.ajax({
+                            url: `/api/entri-servis/${data.id_servis}`,
+                            type: 'GET',
+                            contentType: 'application/json',
+                            success: function (servisResponse) {
+                                if (servisResponse && servisResponse.data) {
+                                    const servis = servisResponse.data;
 
-                        // Set the date properly via flatpickr API
+                                    const label = `${servis.id} • ${servis.plat_no || '-'} • ${servis.nama_pelanggan || '-'} • ${'Rp' + formatNumber(servis.harga) || '-'} • ${servis.tanggal_selesai ? new Date(servis.tanggal_selesai).toLocaleDateString() : 'Belum selesai'}`;
+
+                                    // Tambahkan manual ke Tom Select kalau belum ada
+                                    if (!select.options[servis.id]) {
+                                        select.addOption({
+                                            id: servis.id,
+                                            text: label
+                                        });
+                                    }
+
+                                    // Set sebagai nilai terpilih
+                                    select.setValue(servis.id);
+                                }
+                            },
+                            error: function () {
+                                console.error('Gagal mengambil detail entri servis');
+                            }
+                        });
+                    }
+
+                    $('#nominal').val(data.nominal || '');
+
+                    if (data.tanggal_pemasukan) {
+                        const dateOnly = data.tanggal_pemasukan.split(' ')[0];
                         datePicker.setDate(dateOnly, true, "Y-m-d");
                     }
 
-                    // Handle file input differently - we can't set its value,
-                    // but we can show the filename in our custom element
-                    if (response.data.bukti_pemasukan) {
-                        // Extract just the filename from the path
-                        const fullPath = response.data.bukti_pemasukan;
-                        const filename = fullPath.split('/').pop();
+                    if (data.bukti_pemasukan) {
+                        const filename = data.bukti_pemasukan.split('/').pop();
                         fileName.textContent = filename || 'File sudah ada';
-
-                        // Make file input not required since we already have a file
                         input.removeAttribute('required');
-
-                        // Store the existing file path
-                        input.dataset.existingFile = fullPath;
+                        input.dataset.existingFile = data.bukti_pemasukan;
                     }
 
-                    $('#keterangan').val(response.data.keterangan || '');
+                    $('#keterangan').val(data.keterangan || '');
                 }
             },
             error: function (xhr) {
                 let errorMessage = 'Gagal mengambil data pemasukan.';
 
-                // Coba parse error response
                 if (xhr.responseJSON) {
                     if (xhr.responseJSON.message) {
                         errorMessage = xhr.responseJSON.message;
@@ -124,4 +139,73 @@ $(document).ready(function () {
         });
     }
 
+    // Inisialisasi Tom Select
+    const select = new TomSelect('#id_servis', {
+        valueField: 'id',
+        labelField: 'text',
+        searchField: 'text',
+        create: false,
+        placeholder: 'Pilih entri servis',
+        render: {
+            option: function (data, escape) {
+                return `<div>${data.text}</div>`;
+            },
+            item: function (data, escape) {
+                return `<div>${data.text.split(' • ')[0]}</div>`;
+            }
+        }
+    });
+
+    // Ambil data dari API
+    $.ajax({
+        url: '/api/entri-servis',
+        type: 'GET',
+        contentType: 'application/json',
+        success: function (response) {
+            if (response && response.data) {
+                // Filter data yang belum dibayar
+                const unpaidServices = response.data.filter(item => !item.sudah_dibayar);
+
+                if (unpaidServices.length > 0) {
+                    // Format data untuk dropdown
+                    const options = unpaidServices.map(item => {
+                        const formattedDate = item.tanggal_selesai
+                            ? new Date(item.tanggal_selesai).toLocaleDateString()
+                            : 'Belum selesai';
+
+                        return {
+                            id: item.id,
+                            text: `${item.id} • ${item.plat_no} • ${item.nama_pelanggan} • ${'Rp' + formatNumber(item.harga) || '-'} • ${formattedDate}`
+                        };
+                    });
+
+                    // Tambahkan options ke select
+                    select.addOptions(options);
+
+                    // Set nilai old input jika ada
+                    const oldValue = "{{ old('id_servis', '') }}";
+                    if (oldValue) {
+                        select.setValue(oldValue);
+                    }
+                } else {
+                    // Jika kosong, tampilkan info di dropdown
+                    const infoId = 'no-servis-available';
+                    select.addOption({
+                        id: infoId,
+                        text: '⚠️ Tidak ada data servis yang belum selesai & belum dibayar',
+                        disabled: true
+                    });
+                    select.setValue(infoId);
+                }
+            }
+        },
+        error: function (xhr) {
+            console.error('Gagal mengambil data servis:', xhr);
+        }
+    });
+
+    // Helper function to format number (currency format)
+    function formatNumber(num) {
+        return new Intl.NumberFormat('id-ID').format(num);
+    }
 });

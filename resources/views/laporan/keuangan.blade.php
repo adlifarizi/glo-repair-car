@@ -93,7 +93,8 @@
             <tr>
                 <td style="padding: 5px 0; color: #666666;">Total Laba/Rugi bulan ini</td>
                 <td style="padding: 5px 0; color: #0A40A4; font-weight: bold; text-align: left;">
-                    +Rp{{ number_format($laba_rugi, 0, ',', '.') }}</td>
+                    {{ $laba_rugi >= 0 ? '+Rp' . number_format($laba_rugi, 0, ',', '.') : '-Rp' . number_format(abs($laba_rugi), 0, ',', '.') }}
+                </td>
             </tr>
         </table>
 

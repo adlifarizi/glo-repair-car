@@ -24,7 +24,7 @@
                 <p class="text-gray-600">Data ini merupakan pemasukan dari hasil servis</p>            
 
                 <div class="my-4">
-                    <input type="text" id="customSearch" placeholder="🔍︎ Cari data pemasukan"
+                    <input type="text" id="customSearch" placeholder="🔍︎ Cari data pemasukan" maxlength="255"
                         class="w-full border border-gray-400 rounded-lg py-2 px-4 focus:outline-none focus:ring-1 focus:ring-gray-500">
                 </div>
 

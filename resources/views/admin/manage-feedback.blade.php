@@ -25,7 +25,7 @@
                 <!-- Filter -->
                 <div class="hidden md:flex my-4 gap-2">
                     <button class="filter-btn bg-red-200 text-red-500 rounded-lg px-6 py-2" data-show="1">Ditampilkan</button>
-                    <but ton class="filter-btn bg-white text-gray-400 border border-gray-400 hover:bg-gray-100 rounded-lg px-6 py-2" data-show="0">Disembunyikan</button>
+                    <button class="filter-btn bg-white text-gray-400 border border-gray-400 hover:bg-gray-100 rounded-lg px-6 py-2" data-show="0">Disembunyikan</button>
                 </div>
 
                 <div class="block md:hidden my-4">

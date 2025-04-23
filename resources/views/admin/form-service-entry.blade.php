@@ -32,7 +32,7 @@
                     {{-- PLAT NOMOR --}}
                     <div class="grid md:grid-cols-[130px_1fr] grid-cols-1 md:items-center mb-4 gap-2 md:gap-4">
                         <label for="plat_no" class="text-sm font-medium text-gray-700">Plat Nomor Kendaraan</label>
-                        <input type="text" name="plat_no" id="plat_no"
+                        <input type="text" name="plat_no" id="plat_no" maxlength="20"
                             value="{{ old('plat_no', '') }}"
                             placeholder="Plat nomor kendaraan pelanggan (ex. F 5383 UBT)"
                             class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
@@ -41,7 +41,7 @@
                     {{-- NAMA PELANGGAN --}}
                     <div class="grid md:grid-cols-[130px_1fr] grid-cols-1 md:items-center mb-4 gap-2 md:gap-4">
                         <label for="nama_pelanggan" class="text-sm font-medium text-gray-700">Nama Pelanggan</label>
-                        <input type="text" name="nama_pelanggan" id="nama_pelanggan"
+                        <input type="text" name="nama_pelanggan" id="nama_pelanggan" maxlength="255"
                             value="{{ old('nama_pelanggan', '') }}"
                             placeholder="Nama pelanggan/pemilik kendaraan"
                             class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
@@ -54,7 +54,7 @@
                             <div class="flex">
                                 <span
                                     class="inline-flex items-center px-3 bg-red-100 text-red-500 border border-r-0 border-gray-300 rounded-l-md text-sm">+62</span>
-                                <input type="text" name="nomor_whatsapp" id="nomor_whatsapp"
+                                <input type="text" name="nomor_whatsapp" id="nomor_whatsapp" maxlength="20"
                                     value="{{ old('nomor_whatsapp', '') }}"
                                     placeholder="Nomor Whatsapp Pelanggan"
                                     class="w-full border border-gray-300 rounded-r-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
@@ -66,7 +66,7 @@
                             <div class="flex">
                                 <span
                                     class="inline-flex items-center px-3 bg-red-100 text-red-500 border border-r-0 border-gray-300 rounded-l-md text-sm">Rp</span>
-                                <input type="number" name="harga" id="harga"
+                                <input type="number" name="harga" id="harga" maxlength="30"
                                     value="{{ old('harga', '') }}" placeholder="Nominal"
                                     class="w-full border border-gray-300 rounded-r-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
                             </div>
@@ -76,10 +76,9 @@
                     {{-- KETERANGAN --}}
                     <div class="grid md:grid-cols-[130px_1fr] grid-cols-1 md:items-start mb-4 gap-2 md:gap-4">
                         <label for="keterangan" class="text-sm font-medium text-gray-700 mt-2">Keterangan</label>
-                        <textarea name="keterangan" id="keterangan" rows="4" placeholder="Keterangan"
-                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
-                            {{ old('keterangan', '') }}
-                        </textarea>
+                        <textarea name="keterangan" id="keterangan" rows="4"
+                            maxlength="255" #16a34aplaceholder="Keterangan"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">{{ old('keterangan', '') }}</textarea>
                     </div>
 
                     {{-- STATUS SERVIS (hanya saat edit) --}}

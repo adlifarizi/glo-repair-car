@@ -1,8 +1,10 @@
-<div x-data="chatWindow()" x-cloak>
+<div x-data="chatWindow()" x-init="initWindow()" x-cloak>
 
     <!-- Chat Window -->
     <div x-show="open" x-transition
-        class="fixed flex flex-col bottom-24 right-4 w-80 md:w-[350px] h-[70svh] rounded-2xl bg-white overflow-hidden z-40 shadow-[0_3px_6px_rgba(0,0,0,0.12),3px_0_6px_rgba(0,0,0,0.06),-3px_0_6px_rgba(0,0,0,0.06)]">
+        x-ref="chatWindow"
+        :style="`width: ${windowWidth}px; height: ${windowHeight}px;`"
+        class="fixed flex flex-col bottom-24 right-4 rounded-2xl bg-white overflow-hidden z-50 shadow-[0_3px_6px_rgba(0,0,0,0.12),3px_0_6px_rgba(0,0,0,0.06),-3px_0_6px_rgba(0,0,0,0.06)]">
         <div class="bg-red-700 text-white p-3 font-bold text-center">
             Admin
         </div>
@@ -51,16 +53,76 @@
 function chatWindow() {
     return {
         open: false,
+        windowWidth: 350, // Default width
+        windowHeight: 500, // Default height
         messages: [],
         newMessage: '',
         sessionId: localStorage.getItem('chat_session_id') || null,
         loading: false,
         sending: false,
         
+        initWindow() {
+            // Hitung ukuran awal
+            this.calculateWindowSize();
+            
+            // Update ukuran saat window di-resize
+            window.addEventListener('resize', () => {
+                if (this.open) {
+                    this.calculateWindowSize();
+                }
+            });
+
+            // Inisialisasi realtime jika sudah ada session
+            if (this.sessionId) {
+                this.initRealtime();
+            }
+        },
+        
+        calculateWindowSize() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            
+            // Rasio yang diinginkan (width:height)
+            const targetRatio = 0.7; // Contoh: tinggi = 70% dari lebar
+            
+            // Lebar maksimal dan minimal
+            const maxWidth = 400;
+            const minWidth = 280;
+            const maxHeight = viewportHeight * 0.7; // Maksimal 70% viewport height
+            const minHeight = 400;
+            
+            // Hitung lebar berdasarkan viewport
+            let calculatedWidth = Math.min(
+                Math.max(viewportWidth * 0.3, minWidth), // 30% viewport width
+                maxWidth
+            );
+            
+            // Hitung tinggi berdasarkan rasio
+            let calculatedHeight = calculatedWidth / targetRatio;
+            
+            // Pastikan tinggi dalam batas yang wajar
+            calculatedHeight = Math.min(
+                Math.max(calculatedHeight, minHeight),
+                maxHeight
+            );
+            
+            // Sesuaikan lebar jika tinggi melebihi batas
+            if (calculatedHeight >= maxHeight) {
+                calculatedHeight = maxHeight;
+                calculatedWidth = calculatedHeight * targetRatio;
+            }
+            
+            this.windowWidth = Math.round(calculatedWidth);
+            this.windowHeight = Math.round(calculatedHeight);
+        },
+        
         toggleChat() {
             this.open = !this.open;
-            if (this.open && this.sessionId) {
-                this.loadMessages();
+            if (this.open) {
+                this.calculateWindowSize();
+                if (this.sessionId) {
+                    this.loadMessages();
+                }
             }
         },
         

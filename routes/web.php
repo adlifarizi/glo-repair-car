@@ -177,3 +177,13 @@ Route::get('/ubah-pengeluaran/{id}', function () {
         'mode' => 'edit',
     ]);
 });
+
+
+Route::get('/test-pusher', function() {
+    try {
+        event(new App\Events\NewChatMessage(App\Models\Chat::first()));
+        return "Event dispatched!";
+    } catch (\Exception $e) {
+        return "Error: " . $e->getMessage();
+    }
+});

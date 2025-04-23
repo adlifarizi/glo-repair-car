@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Entri_Servis;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -13,14 +14,24 @@ class FeedbackController extends Controller
         // Debug: Lihat apakah request masuk
         Log::info($request->all());
 
+        // Validasi awal
         $request->validate([
             'nama_pelanggan' => 'required|string',
             'plat_no' => 'required|string',
             'rating' => 'required|integer|between:1,5',
-            'feedback' => 'required|string',        ]);
+            'feedback' => 'required|string',
+        ]);
 
+        // Cek apakah plat_no ada di tabel entri_servis
+        $entriServis = Entri_Servis::where('plat_no', $request->plat_no)->first();
 
-        // Simpan data ke database
+        if (!$entriServis) {
+            return response()->json([
+                'message' => 'Plat nomor tidak ditemukan dalam entri servis. Harap masukkan plat nomor yang pernah diservis'
+            ], 404);
+        }
+
+        // Simpan feedback jika plat_no ditemukan
         $feedback = Feedback::create($request->all());
 
         return response()->json([
@@ -28,6 +39,7 @@ class FeedbackController extends Controller
             'data' => $feedback
         ], 201);
     }
+
 
     public function toggleShow(Request $request, $id)
     {

@@ -149,21 +149,23 @@
 
                 channel.bind('new.message', (data) => {
                     if (data.chat.sender !== 'Admin') {
+                        // Terima pesan baik dari admin maupun user (untuk sync)
                         const time = new Date(data.chat.created_at).toLocaleTimeString([], {
                             hour: '2-digit',
                             minute: '2-digit'
                         });
 
+                        const isAdmin = data.chat.sender === 'Admin';
+
                         $('#messages-container').append(`
-                            <div class="flex justify-start mb-4">
-                                <div class="bg-[#F2F2F2] text-black rounded-lg py-2 px-4 max-w-xs shadow-sm">
+                            <div class="flex ${isAdmin ? 'justify-end' : 'justify-start'} mb-4">
+                                <div class="${isAdmin ? 'bg-red-200' : 'bg-[#F2F2F2]'} text-black rounded-lg py-2 px-4 max-w-xs shadow-sm">
                                     <p>${data.chat.content}</p>
                                     <span class="text-xs text-black block text-right mt-1">${time}</span>
                                 </div>
                             </div>
                         `);
-
-                        // Scroll ke bawah
+                        
                         $('#messages-container').scrollTop($('#messages-container')[0].scrollHeight);
                     }
                 });

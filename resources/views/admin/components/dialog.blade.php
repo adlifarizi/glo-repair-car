@@ -20,7 +20,7 @@
             <h2 class="text-2xl text-gray-900 font-semibold">Loading...</h2>
         @endif
 
-        <p class="text-gray-500">{{ $message ?? '' }}</p>
+        <p class="text-gray-500 text-center">{{ $message ?? '' }}</p>
 
         @if($type === 'confirm-delete')
             <div class="flex gap-2">

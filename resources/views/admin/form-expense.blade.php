@@ -36,7 +36,7 @@
                             <div class="flex">
                                 <span
                                     class="inline-flex items-center px-3 bg-red-100 text-red-500 border border-r-0 border-gray-300 rounded-l-md text-sm">Rp</span>
-                                <input type="number" name="nominal" id="nominal"
+                                <input type="number" name="nominal" id="nominal" maxlength="30"
                                     value="{{ old('nominal', '') }}" placeholder="nominal pengeluaran"
                                     class="w-full border border-gray-300 rounded-r-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
                             </div>
@@ -75,10 +75,9 @@
                     {{-- KETERANGAN --}}
                     <div class="grid md:grid-cols-[130px_1fr] grid-cols-1 md:items-start mb-4 gap-2 md:gap-4">
                         <label for="keterangan" class="text-sm font-medium text-gray-700 mt-2">Keterangan</label>
-                        <textarea name="keterangan" id="keterangan" rows="4" placeholder="keterangan"
-                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
-                            {{ old('keterangan', '') }}
-                        </textarea>
+                        <textarea name="keterangan" id="keterangan" rows="4"
+                            maxlength="255" placeholder="keterangan"
+                            class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">{{ old('keterangan') }}</textarea>
                     </div>
 
                     {{-- BUTTON --}}
