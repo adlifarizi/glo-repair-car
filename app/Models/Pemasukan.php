@@ -16,8 +16,8 @@ class Pemasukan extends Model
 
     protected $table = 'pemasukan';
 
-    public function EntriServis()
+    public function entriServis()
     {
-        return $this->hasOne(Entri_Servis::class);
+        return $this->belongsTo(Entri_Servis::class, 'id_servis');
     }
 }

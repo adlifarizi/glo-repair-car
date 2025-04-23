@@ -25,7 +25,7 @@ function loadData() {
                             <td class="px-6 py-4 whitespace-nowrap">${item.rating}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.plat_no}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${item.feedback}</td>
+                            <td class="px-6 py-4 max-w-xl break-words">${item.feedback}</td>
                         </tr>
                     `;
                     tableBody.append(row);

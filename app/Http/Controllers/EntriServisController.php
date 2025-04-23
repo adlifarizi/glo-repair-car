@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Entri_Servis;
 use Illuminate\Support\Facades\Log;
@@ -14,7 +15,23 @@ class EntriServisController extends Controller
 
     public function show()
     {
-        $data = Entri_Servis::all();
+        $data = Entri_Servis::with('pemasukan')->get()->map(function ($entri) {
+            return [
+                'id' => $entri->id,
+                'plat_no' => $entri->plat_no,
+                'nama_pelanggan' => $entri->nama_pelanggan,
+                'status' => $entri->status,
+                'nomor_whatsapp' => $entri->nomor_whatsapp,
+                'keterangan' => $entri->keterangan,
+                'prediksi' => $entri->prediksi,
+                'harga' => $entri->harga,
+                'tanggal_selesai' => $entri->tanggal_selesai,
+                'sudah_dibayar' => $entri->pemasukan !== null,
+                'created_at' => $entri->created_at,
+                'updated_at' => $entri->updated_at,
+            ];
+        });
+
         return response()->json([
             'message' => 'Berhasil mengambil semua data entri servis',
             'data' => $data
@@ -23,13 +40,16 @@ class EntriServisController extends Controller
 
     public function showById($id)
     {
-        $data = Entri_Servis::find($id);
+        $data = Entri_Servis::with('pemasukan')->find($id);
 
         if (!$data) {
             return response()->json([
                 'message' => 'Data tidak ditemukan'
             ], 404);
         }
+
+        // Tambahkan properti secara manual
+        $data->sudah_bayar = $data->pemasukan !== null;
 
         return response()->json([
             'message' => 'Data berhasil diambil',
@@ -83,6 +103,8 @@ class EntriServisController extends Controller
     }
 
 
+    use Carbon\Carbon;
+
     public function update(Request $request, $id)
     {
         // Debug: Lihat apakah request masuk
@@ -110,8 +132,16 @@ class EntriServisController extends Controller
             'tanggal_selesai' => 'sometimes|date',
         ]);
 
-        // Update data dengan input yang diberikan
-        $entriServis->update($request->except('_method'));
+        // Ambil semua input kecuali _method
+        $data = $request->except('_method');
+
+        // Cek jika status diubah ke "Selesai"
+        if (isset($data['status']) && $data['status'] === 'Selesai') {
+            $data['tanggal_selesai'] = Carbon::now(); // Atur tanggal selesai ke sekarang
+        }
+
+        // Update data
+        $entriServis->update($data);
 
         return response()->json([
             'message' => 'Entri servis berhasil diperbarui',

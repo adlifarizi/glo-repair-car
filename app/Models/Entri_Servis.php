@@ -18,4 +18,10 @@ class Entri_Servis extends Model
     ];
 
     protected $table = 'entri_servis';
+
+    public function pemasukan()
+    {
+        return $this->hasOne(Pemasukan::class, 'id_servis');
+    }
+
 }

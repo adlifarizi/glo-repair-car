@@ -105,6 +105,16 @@
                         </div>
                     @endif
 
+                    {{-- SELESAIKAN TRANSAKSI (hanya saat edit dan belum bayar) --}}
+                    @if($mode === 'edit')
+                        <button id="selesaikan-transaksi-btn"
+                            class="my-4 font-medium py-2 px-6 rounded-md btn-disabled"
+                            disabled>
+                            Selesaikan Transaksi
+                        </button>
+                    @endif
+
+
                     {{-- BUTTON --}}
                     <button type="submit" id="submit-button"
                         class="w-full bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 rounded-md transition duration-200">
@@ -116,6 +126,38 @@
                 </form>
             </div>
         </div>
+
+        <!-- Modal Popup -->
+        <div id="modal-pemasukan" class="hidden fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+            <div class="bg-white p-6 rounded-md w-96">
+                <h2 class="text-xl font-medium mb-4">Tambah Pemasukan</h2>
+                <form id="form-pemasukan" enctype="multipart/form-data">
+                    @csrf
+                    <input type="hidden" name="id_servis" id="id_servis" value="">
+                    <div class="mb-4">
+                        <label for="nominal" class="block text-gray-700">Nominal</label>
+                        <input type="number" id="nominal" name="nominal" class="w-full p-2 border border-gray-300 rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="keterangan" class="block text-gray-700">Keterangan</label>
+                        <textarea id="keterangan_modal" name="keterangan" rows="2" class="w-full p-2 border border-gray-300 rounded"></textarea>
+                    </div>
+                    <div class="mb-4">
+                        <label for="tanggal_pemasukan" class="block text-gray-700">Tanggal Pemasukan</label>
+                        <input type="date" id="tanggal_pemasukan" name="tanggal_pemasukan" class="w-full p-2 border border-gray-300 rounded" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="bukti_pemasukan" class="block text-gray-700">Bukti Pemasukan (Upload File)</label>
+                        <input type="file" accept="image/*" id="bukti_pemasukan" name="bukti_pemasukan" class="w-full p-2 border border-gray-300 rounded" required>
+                    </div>
+                    <div class="flex justify-end">
+                        <button type="button" id="batal-btn" class="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-600 rounded-md mr-2">Batal</button>
+                        <button type="submit" class="py-2 px-4 bg-green-600 hover:bg-green-700 text-white rounded-md">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
     </div>
 
     <script>
@@ -124,4 +166,26 @@
     </script>
 
     <script src="{{ asset('js/admin/form-service-entry.js') }}" defer></script>
+
+    <style>
+        .btn-disabled {
+            background-color: #d1d5db; /* bg-gray-300 */
+            color: #6b7280; /* text-gray-500 */
+            cursor: not-allowed;
+        }
+
+        .btn-disabled:hover {
+            background-color: #d1d5db; /* tetap abu-abu */
+        }
+
+        .btn-active {
+            background-color: #16a34a; /* bg-green-600 */
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-active:hover {
+            background-color: #15803d; /* bg-green-700 */
+        }
+    </style>
 @endsection

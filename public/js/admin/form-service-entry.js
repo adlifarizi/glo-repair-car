@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    let sudahBayar = false;
+    let idServis = 0;
+    let platNoServis = '';
+    let nominalServis = 0;
+
     if (mode === 'edit' && serviceEntryId) {
         loadDataById(serviceEntryId);
     }
@@ -21,8 +26,8 @@ $(document).ready(function () {
             formData.append('status', 'Dalam antrian');
         }
 
-         // Add _method field for Laravel to handle PUT requests
-         if (mode === 'edit') {
+        // Add _method field for Laravel to handle PUT requests
+        if (mode === 'edit') {
             formData.append('_method', 'PUT');
         }
 
@@ -67,12 +72,20 @@ $(document).ready(function () {
                     $('#nomor_whatsapp').val(response.data.nomor_whatsapp || '');
                     $('#harga').val(response.data.harga || '');
                     $('#keterangan').val(response.data.keterangan || '');
-                    $('#harga').val(response.data.harga || '');
 
-                    if(mode === 'edit') {
+                    // Ambil sudah_bayar dari response
+                    sudahBayar = response.data.sudah_bayar;
+                    idServis = response.data.id
+                    platNoServis = response.data.plat_no
+                    nominalServis = response.data.harga
+
+                    if (mode === 'edit') {
                         const status = response.data.status;
                         $(`input[name="status"][value="${status}"]`).prop('checked', true);
                     }
+
+                    // Update tombol berdasarkan status dan sudah_bayar
+                    updateTombolTransaksi();
                 }
             },
             error: function (xhr) {
@@ -93,5 +106,93 @@ $(document).ready(function () {
             }
         });
     }
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Selesaikan Transaksi
+    |--------------------------------------------------------------------------
+    */
+    function updateTombolTransaksi() {
+        const btn = $('#selesaikan-transaksi-btn');
+        const selectedStatus = $('input[name="status"]:checked').val();
+
+        if (selectedStatus === 'Selesai' && !sudahBayar) {
+            btn.prop('disabled', false)
+                .removeClass('btn-disabled')
+                .addClass('btn-active');
+        } else {
+            btn.prop('disabled', true)
+                .removeClass('btn-active')
+                .addClass('btn-disabled');
+        }
+    }
+
+    // Inisialisasi
+    updateTombolTransaksi();
+
+    // Update saat radio status berubah
+    $('input[name="status"]').on('change', function () {
+        updateTombolTransaksi();
+    });
+
+    $('#selesaikan-transaksi-btn').click(function (e) {
+        e.preventDefault(); // Mencegah form submit
+        openModal();
+    });
+
+    $('#batal-btn').click(function () {
+        closeModal(); // Menutup modal saat tombol batal diklik
+    });
+
+
+    // Fungsi untuk membuka modal
+    function openModal() {
+        $('#id_servis').val(idServis);
+        $('#keterangan_modal').val(`Pemasukan dari entri servis dengan plat no: ${platNoServis}`);
+        $('#nominal').val(nominalServis);
+        const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
+        $('#tanggal_pemasukan').val(today);
+
+        $('#modal-pemasukan')
+            .removeClass('hidden')
+            .addClass('flex');
+
+    }
+
+    // Fungsi untuk menutup modal
+    function closeModal() {
+        $('#modal-pemasukan')
+            .removeClass('flex')
+            .addClass('hidden');
+    }
+
+    // Fungsi untuk mengirimkan data via AJAX
+    $('#form-pemasukan').submit(function (e) {
+        e.preventDefault();
+
+        const formData = new FormData(this);
+
+        $.ajax({
+            url: '/api/pemasukan',
+            type: 'POST',
+            data: formData,
+            processData: false, // <--- WAJIB untuk FormData
+            contentType: false, // <--- WAJIB untuk FormData
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function (response) {
+                showDialog('dialog-success', `Data pemasukan berhasil ditambahkan!`);
+                closeModal(); // Menutup modal setelah sukses
+            },
+            error: function (xhr) {
+                let response = xhr.responseJSON;
+                showDialog('dialog-error', response?.message || `Data pemasukan gagal ditambahkan!`);
+            }
+        });
+    });
+
 
 });

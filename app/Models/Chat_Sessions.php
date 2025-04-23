@@ -12,11 +12,11 @@ class Chat_Sessions extends Model
     ];
 
     protected $table = 'chat_sessions';
-    
-    public function Chats(){
-        return $this->hasMany(Chat::class);
+
+    public function Chats()
+    {
+        return $this->hasMany(Chat::class, 'id_chat_sessions');
     }
-    
 
     protected static function boot()
     {

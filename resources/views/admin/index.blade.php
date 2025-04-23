@@ -137,7 +137,7 @@
                     <p class="font-semibold text-xl">Ulasan Terbaru</p>
 
                     <!-- Review List Container -->
-                    <div class="flex flex-1 flex-col items-center justify-center gap-3 w-full" id="ulasan-container">
+                    <div class="flex flex-1 flex-col items-center justify-start gap-3 w-full" id="ulasan-container">
                         <!-- Placeholder saat loading -->
                         <div class="text-center py-4">
                             <i class="fas fa-spinner fa-spin"></i> Memuat ulasan...
@@ -152,22 +152,11 @@
                     <p class="font-semibold text-xl">Chat Pelanggan Terbaru</p>
 
                     <!-- Chat List -->
-                    <div class="flex flex-col gap-3 w-full">
-                        @foreach ([
-                            'Berapa lama waktu yang dibutuhkan untuk memperbaiki mesin mobil saya?',
-                            'Berapa lama waktu yang dibutuhkan untuk memperbaiki mesin mobil saya?',
-                            'Berapa lama waktu yang dibutuhkan untuk memperbaiki mesin mobil saya?',
-                            'Berapa lama waktu yang dibutuhkan untuk memperbaiki mesin mobil saya?',
-                            'Berapa lama waktu yang dibutuhkan untuk memperbaiki mesin mobil saya?',
-                        ] as $chat)
-                            <div class="inline-flex w-full items-center gap-2 text-gray-800 overflow-hidden group">
-                                <i class="fa-regular fa-comment"></i>
-                                <p class="line-clamp-1">
-                                    Chat Session ID: 67890 - {{ $chat }}
-                                </p>
-                                <a class="text-red-700 font-medium ml-4 cursor-pointer">Balas</a>
-                            </div>                        
-                        @endforeach
+                    <div class="flex flex-1 flex-col items-center justify-start gap-3 w-full" id="chat-container">
+                        <!-- Placeholder saat loading -->
+                        <div class="text-center py-4">
+                            <i class="fas fa-spinner fa-spin"></i> Memuat chat...
+                        </div>
                     </div>
 
                     <a href="/kelola-chat" class="bg-gray-800 hover:bg-gray-900 text-white rounded px-6 py-2 cursor-pointer w-full text-center">Lihat semua</a>

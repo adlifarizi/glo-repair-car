@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewChatMessage;
 use App\Models\Chat;
 use App\Models\Chat_Sessions;
 use Carbon\Carbon;
@@ -51,6 +52,9 @@ class ChatController extends Controller
             'content' => $request->content,
         ]);
 
+        // Broadcast event
+        broadcast(new NewChatMessage($chat))->toOthers();
+
         return response()->json([
             'message' => 'Chat berhasil dikirim',
             'session_id' => $sessionId, // Kembalikan session ID agar frontend bisa menyimpan
@@ -60,24 +64,67 @@ class ChatController extends Controller
 
     public function getAllChatSessions()
     {
-        // Ambil semua session dengan data chat yang terkait
-        $sessions = Chat_Sessions::get();
+        $now = Carbon::now();
+
+        // Ambil semua session
+        $sessions = Chat_Sessions::all();
+
+        // Hapus yang expired
+        $sessions->each(function ($session) use ($now) {
+            if ($session->expired_at && Carbon::parse($session->expired_at)->isPast()) {
+                Log::info("Session expired (getAll). Deleting session: " . $session->id);
+                $session->delete(); // ini akan cascade delete chat-nya
+            }
+        });
+
+        // Ambil ulang session yang aktif setelah penghapusan
+        $sessions = Chat_Sessions::where('expired_at', '>', $now)->get();
+
+        $sessions = $sessions->map(function ($session) {
+            $lastChat = Chat::where('id_chat_sessions', $session->id)
+                ->orderBy('created_at', 'desc')
+                ->first();
+
+            $session->last_message = $lastChat ? $lastChat->content : null;
+            $session->last_chat_time = $lastChat ? $lastChat->created_at : null;
+
+            return $session;
+        });
+
+        $sessions = $sessions->sortByDesc('last_chat_time')->values();
 
         return response()->json([
-            'message' => 'Berhasil mengambil semua chat sessions',
+            'message' => 'Berhasil mengambil semua chat sessions yang masih aktif',
             'data' => $sessions
         ], 200);
     }
 
     public function getChatsBySession($session_id)
     {
-        $chats = Chat::where('id_chat_sessions', $session_id)
-        ->orderBy('created_at', 'asc') // Urutkan dari lama ke baru
-        ->get();
-        
+        $session = Chat_Sessions::find($session_id);
+
+        if (!$session) {
+            return response()->json([
+                'message' => 'Sesi tidak ditemukan'
+            ], 404);
+        }
+
+        // Cek apakah sesi sudah expired
+        if (Carbon::parse($session->expired_at)->isPast()) {
+            Log::info("Session expired (getChats). Deleting session: " . $session_id);
+            $session->delete(); // juga akan hapus chat-nya
+
+            return response()->json([
+                'message' => 'Sesi telah expired dan telah dihapus'
+            ], 410);
+        }
+
+
+        $chats = $session->Chats()->orderBy('created_at', 'asc')->get();
+
         if ($chats->isEmpty()) {
             return response()->json([
-                'message' => 'Tidak ada chat dalam sesi ini atau sesi tidak ditemukan'
+                'message' => 'Tidak ada chat dalam sesi ini'
             ], 404);
         }
 

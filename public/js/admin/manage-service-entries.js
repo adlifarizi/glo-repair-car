@@ -24,7 +24,12 @@ function loadData() {
                             <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.nomor_whatsapp}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.status}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${item.keterangan ?? ''}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="${item.sudah_dibayar === true ? 'text-green-500' : 'text-red-600'}">
+                                    ${item.sudah_dibayar === true ? 'Sudah dibayar' : 'Belum dibayar'}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 max-w-xs break-words">${item.keterangan ?? ''}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.harga)}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.prediksi ?? ''}</td>
                         </tr>

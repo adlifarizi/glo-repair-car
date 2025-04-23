@@ -290,31 +290,60 @@ $(document).ready(function () {
                     `);
                 });
             } else {
-                // Tampilkan placeholder jika tidak ada data
-                container.append(`
-                    <div class="text-gray-500">
-                        Rating 5 bintang: Pelanggan Wang Yiren memberikan ulasan, "Servis sangat memuaskan dan cepat, teknisi sangat ramah!"
-                    </div>
-                    <div class="text-gray-500">
-                        Rating 5 bintang: Pelanggan Lee Ji-eun bilang, "Pengalaman terbaik! Akan kembali lagi ke sini!"
-                    </div>
-                    <div class="text-gray-500">
-                        Rating 4 bintang: Pelanggan Johnny Wang menulis, "Hasil servis memuaskan."
-                    </div>
-                `);
+                container.append('<div class="text-gray-500">Belum ada ulasan</div>');
             }
         },
         error: function (xhr) {
             $('#ulasan-container').html(`
-                <div class="text-gray-500">
-                    Rating 5 bintang: Pelanggan Wang Yiren memberikan ulasan, "Servis sangat memuaskan dan cepat, teknisi sangat ramah!"
-                </div>
-                <div class="text-gray-500">
-                    Rating 5 bintang: Pelanggan Lee Ji-eun bilang, "Pengalaman terbaik! Akan kembali lagi ke sini!"
-                </div>
-                <div class="text-gray-500">
-                    Rating 4 bintang: Pelanggan Johnny Wang menulis, "Hasil servis memuaskan."
-                </div>
+                <div class="text-gray-500">Gagal memuat ulasan</div>
+            `);
+            console.error('Error:', xhr.responseText);
+        }
+    });
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | 5 Chat Terbaru
+    |--------------------------------------------------------------------------
+    */
+    $.ajax({
+        url: '/api/chat-sessions',
+        method: 'GET',
+        success: function (response) {
+            const container = $('#chat-container');
+            container.empty(); // Kosongkan container
+
+            if (response.data && response.data.length > 0) {
+                // Ambil 5 data terbaru
+                const latestChat = response.data.slice(0, 5);
+
+                if (latestChat.length === 0) {
+                    container.append('<div class="text-gray-500">Belum ada chat</div>');
+                    return;
+                }
+
+                latestChat.forEach(session => {
+                    container.append(`
+                        <div class="inline-flex w-full items-center gap-2 text-gray-800 overflow-hidden group">
+                            <div class="w-full flex items-center gap-2">
+                                <i class="fa-regular fa-comment"></i>
+                                <p class="line-clamp-1">
+                                    Chat Session ID: ${session.id} - ${session.last_message}
+                                </p>
+                            </div>
+                            <a href="/kelola-chat#chat-${session.id}" class="text-red-700 font-medium ml-4 cursor-pointer">Balas</a>
+                        </div>
+                    `);
+                });
+            } else {
+                container.append('<div class="text-gray-500">Belum ada chat</div>');
+            }
+        },
+        error: function (xhr) {
+            $('#chat-container').html(`
+                <div class="text-gray-500">Gagal memuat chat</div>
             `);
             console.error('Error:', xhr.responseText);
         }

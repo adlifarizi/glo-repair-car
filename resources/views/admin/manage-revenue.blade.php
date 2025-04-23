@@ -35,7 +35,7 @@
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Tindakan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">id_servis</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Nominal</th>
-                            <th class="py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Tanggal Pemasukan</th>
+                            <th class="px-3 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Tanggal Pemasukan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Keterangan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Bukti Pemasukan</th>
                         </tr>

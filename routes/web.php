@@ -114,27 +114,7 @@ Route::get('/kelola-ulasan', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-chat', function () {
-    $path = resource_path('views/admin/data/chat-sessions.json');
-
-    $json = File::get($path);
-    $sessions = json_decode($json);
-
-    return view('admin.manage-chat', compact('sessions'));
-});
-
-Route::get('/kelola-chat/session/{id}', function ($id) {
-    $allChats = json_decode(File::get(resource_path('views/admin/data/chat.json')));
-    $chats = collect($allChats)->where('id_chat_session', (int) $id)->values();
-
-    // Ambil expired_at dari chat-session.json
-    $allSessions = json_decode(File::get(resource_path('views/admin/data/chat-sessions.json')));
-    $session = collect($allSessions)->firstWhere('id', (int) $id);
-    $expiredAt = $session->expired_at ?? null;
-
-    return response()->json([
-        'chats' => $chats,
-        'expired_at' => $expiredAt,
-    ]);
+    return view('admin.manage-chat');
 });
 
 

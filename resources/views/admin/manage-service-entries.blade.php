@@ -63,6 +63,7 @@
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Nama Pelanggan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Nomor Whatsapp</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Status Servis</th>
+                            <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Status Pembayaran</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Keterangan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Harga</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Kunjungan Selanjutnya</th>
