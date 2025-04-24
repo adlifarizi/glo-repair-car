@@ -72,10 +72,7 @@ function chatWindow() {
                 }
             });
 
-            // Inisialisasi realtime jika sudah ada session
-            if (this.sessionId) {
-                this.initRealtime();
-            }
+            this.initPusher();
         },
         
         calculateWindowSize() {
@@ -153,24 +150,30 @@ function chatWindow() {
             });
         },
 
-        initRealtime() {
-            if (!this.sessionId) return;
-            
-            const channel = pusher.subscribe(`chat.session.${this.sessionId}`);
-            
-            channel.bind('new.message', (data) => {
-                if (data.chat.sender !== 'Pelanggan') {
-                    this.messages.push({
-                        sender: data.chat.sender,
-                        content: data.chat.content,
-                        created_at: data.chat.created_at
-                    });
-                    
-                    this.$nextTick(() => {
-                        this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
-                    });
-                }
+        initPusher() {
+            const pusher = new Pusher('{{ $pusherKey }}', {
+                cluster: '{{ $pusherCluster }}',
+                encrypted: true,
+                forceTLS: true,
             });
+
+            if (this.sessionId) {
+                const channel = pusher.subscribe('chat.' + this.sessionId);
+                
+                channel.bind('new-message', (data) => {
+                    // Tambahkan pesan baru hanya jika pengirim bukan pelanggan
+                    if (data.sender !== 'Pelanggan') {
+                        this.messages.push({
+                            sender: data.sender,
+                            content: data.message
+                        });
+                        
+                        this.$nextTick(() => {
+                            this.$refs.messagesContainer.scrollTop = this.$refs.messagesContainer.scrollHeight;
+                        });
+                    }
+                });
+            }
         },
         
         sendMessage() {
@@ -196,7 +199,6 @@ function chatWindow() {
                     if (data.session_id && !this.sessionId) {
                         this.sessionId = data.session_id;
                         localStorage.setItem('chat_session_id', data.session_id);
-                        this.initRealtime();
                     }
                     
                     // Tambahkan pesan baru ke daftar pesan

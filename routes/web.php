@@ -11,7 +11,10 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 Route::get('/', function () {
-    return view('main.index');
+    return view('main.index')->with([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+    ]);;
 });
 
 
@@ -114,7 +117,10 @@ Route::get('/kelola-ulasan', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/kelola-chat', function () {
-    return view('admin.manage-chat');
+    return view('admin.manage-chat')->with([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+    ]);;
 });
 
 
@@ -176,14 +182,4 @@ Route::get('/ubah-pengeluaran/{id}', function () {
     return view('admin.form-expense', [
         'mode' => 'edit',
     ]);
-});
-
-
-Route::get('/test-pusher', function() {
-    try {
-        event(new App\Events\NewChatMessage(App\Models\Chat::first()));
-        return "Event dispatched!";
-    } catch (\Exception $e) {
-        return "Error: " . $e->getMessage();
-    }
 });

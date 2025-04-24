@@ -55,12 +55,6 @@
 
     <!-- Pusher -->
     <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
-    <script>
-        const pusher = new Pusher('{{ env("PUSHER_APP_KEY") }}', {
-            cluster: '{{ env("PUSHER_APP_CLUSTER") }}',
-            encrypted: true
-        });
-    </script>
 
     <!-- Global Javascript -->
     <script src="{{ asset('js/admin/app.js') }}" defer></script>

@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Chat;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,22 +10,18 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class NewChatMessage implements ShouldBroadcast
+class NewChatSession implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $message;
     public $sessionId;
-    public $sender;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message, $sessionId, $sender)
+    public function __construct($sessionId)
     {
-        $this->message = $message;
         $this->sessionId = $sessionId;
-        $this->sender = $sender;
     }
 
     /**
@@ -37,12 +32,12 @@ class NewChatMessage implements ShouldBroadcast
     public function broadcastOn(): array
     {
         return [
-            new Channel('chat.' . $this->sessionId),
+            new Channel('chat.updates'),
         ];
     }
 
     public function broadcastAs()
     {
-        return 'new-message';
+        return 'new-session';
     }
 }

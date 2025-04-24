@@ -53,7 +53,7 @@ class ChatController extends Controller
         ]);
 
         // Broadcast event
-        broadcast(new NewChatMessage($chat))->toOthers();
+        event(new NewChatMessage($chat->content, $chat->id_chat_sessions, $chat->sender));
 
         return response()->json([
             'message' => 'Chat berhasil dikirim',
