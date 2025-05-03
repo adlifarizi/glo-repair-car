@@ -15,22 +15,25 @@ class EntriServisController extends Controller
 
     public function show()
     {
-        $data = Entri_Servis::with('pemasukan')->get()->map(function ($entri) {
-            return [
-                'id' => $entri->id,
-                'plat_no' => $entri->plat_no,
-                'nama_pelanggan' => $entri->nama_pelanggan,
-                'status' => $entri->status,
-                'nomor_whatsapp' => $entri->nomor_whatsapp,
-                'keterangan' => $entri->keterangan,
-                'prediksi' => $entri->prediksi,
-                'harga' => $entri->harga,
-                'tanggal_selesai' => $entri->tanggal_selesai,
-                'sudah_dibayar' => $entri->pemasukan !== null,
-                'created_at' => $entri->created_at,
-                'updated_at' => $entri->updated_at,
-            ];
-        });
+        $data = Entri_Servis::with('pemasukan')
+            ->latest()
+            ->get()
+            ->map(function ($entri) {
+                return [
+                    'id' => $entri->id,
+                    'plat_no' => $entri->plat_no,
+                    'nama_pelanggan' => $entri->nama_pelanggan,
+                    'status' => $entri->status,
+                    'nomor_whatsapp' => $entri->nomor_whatsapp,
+                    'keterangan' => $entri->keterangan,
+                    'prediksi' => $entri->prediksi,
+                    'harga' => $entri->harga,
+                    'tanggal_selesai' => $entri->tanggal_selesai,
+                    'sudah_dibayar' => $entri->pemasukan !== null,
+                    'created_at' => $entri->created_at,
+                    'updated_at' => $entri->updated_at,
+                ];
+            });
 
         return response()->json([
             'message' => 'Berhasil mengambil semua data entri servis',

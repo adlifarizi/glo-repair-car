@@ -13,12 +13,29 @@ function loadData() {
 
                 // Loop through data and append rows to table
                 response.data.forEach(function (item) {
+                    const createdAt = new Date(item.created_at);
+                    const prediksiHari = parseInt(item.prediksi, 10);
+
+                    let tanggalPrediksi = '';
+                    if (!isNaN(prediksiHari)) {
+                        createdAt.setDate(createdAt.getDate() + prediksiHari);
+                        tanggalPrediksi = createdAt.toLocaleDateString('id-ID', {
+                            day: '2-digit',
+                            month: 'long',
+                            year: 'numeric'
+                        });
+                    }
+
                     var row = `
                         <tr class="odd:bg-white even:bg-gray-200">
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <a href="/ubah-entri-servis/${item.id}" class="text-blue-500 hover:underline">Ubah</a><br>
                                 <button class="text-red-500 hover:underline" onclick="confirmDelete(${item.id})">Hapus</button><br>
-                                <button class="text-orange-500 hover:underline">Ingatkan Pelanggan</button>
+                                <button 
+                                    class="text-orange-500 hover:underline" 
+                                    onclick="ingatkanPelanggan('${item.nomor_whatsapp}', '${tanggalPrediksi}', '${item.nama_pelanggan}')">
+                                    Ingatkan Pelanggan
+                                </button>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.plat_no}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
@@ -31,7 +48,7 @@ function loadData() {
                             </td>
                             <td class="px-6 py-4 max-w-xs break-words">${item.keterangan ?? ''}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.harga)}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${item.prediksi ?? ''}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${tanggalPrediksi}</td>
                         </tr>
                     `;
                     tableBody.append(row);
@@ -60,6 +77,31 @@ function loadData() {
         }
     });
 }
+
+function formatNomorWA(nomor) {
+    let cleaned = nomor.replace(/[^0-9]/g, ''); // hapus karakter non-digit
+
+    if (cleaned.startsWith('0')) {
+        return '62' + cleaned.slice(1); // ganti 0 dengan 62
+    }
+
+    if (cleaned.startsWith('62')) {
+        return cleaned; // sudah benar
+    }
+
+    // Kalau misalnya cuma "817xxxxxxx", anggap dia seperti "0817..."
+    return '62' + cleaned;
+}
+
+function ingatkanPelanggan(nomor, tanggalPrediksi, namaPelanggan) {
+    const pesan = `Halo ${namaPelanggan}!\nKami dari bengkel Glo Repair Car ingin mengingatkan bahwa Anda disarankan untuk melakukan kunjungan kembali pada tanggal ${tanggalPrediksi}. Terima kasih sudah menggunakan layanan kami!\n\nSalam hormat,\nGlo Repair Car`;
+
+    const nomorWa = formatNomorWA(nomor);
+
+    const url = `https://wa.me/${nomorWa}?text=${encodeURIComponent(pesan)}`;
+    window.open(url, '_blank');
+}
+
 
 // Fungsi confirmDelete yang dipanggil saat tombol "Hapus" ditekan
 function confirmDelete(id) {

@@ -12,7 +12,7 @@ class PemasukanController extends Controller
     // Menampilkan seluruh data pemasukan
     public function show()
     {
-        $pemasukan = Pemasukan::all(); // Mengambil semua data
+        $pemasukan = Pemasukan::latest()->get(); // Mengambil semua data
 
         if ($pemasukan->isEmpty()) {  // Mengecek apakah data kosong
             return response()->json([

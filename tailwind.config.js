@@ -17,6 +17,7 @@ export default {
         'text-gray-500',
         'text-gray-800',
         'text-gray-700',
+        'text-orange-500',
         'grid-cols-[auto_min-content_auto]',
         'h-[1px]',
         'absolute',

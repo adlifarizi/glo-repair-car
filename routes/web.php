@@ -14,7 +14,7 @@ Route::get('/', function () {
     return view('main.index')->with([
         'pusherKey' => config('broadcasting.connections.pusher.key'),
         'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
-    ]);;
+    ]);
 });
 
 
@@ -25,7 +25,10 @@ Route::get('/', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/layanan', function () {
-    return view('main.layanan');
+    return view('main.layanan')->with([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+    ]);
 });
 
 
@@ -36,7 +39,10 @@ Route::get('/layanan', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/ulasan', function () {
-    return view('main.ulasan');
+    return view('main.ulasan')->with([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+    ]);
 });
 
 
@@ -47,7 +53,10 @@ Route::get('/ulasan', function () {
 |--------------------------------------------------------------------------
 */
 Route::get('/kontak', function () {
-    return view('main.kontak');
+    return view('main.kontak')->with([
+        'pusherKey' => config('broadcasting.connections.pusher.key'),
+        'pusherCluster' => config('broadcasting.connections.pusher.options.cluster')
+    ]);
 });
 
 

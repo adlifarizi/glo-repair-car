@@ -12,7 +12,7 @@ class PengeluaranController extends Controller
     // Menampilkan seluruh data pengeluaran
     public function show()
     {
-        $pengeluaran = Pengeluaran::all(); // Mengambil semua data
+        $pengeluaran = Pengeluaran::latest()->get(); // Mengambil semua data
 
         if ($pengeluaran->isEmpty()) {  // Mengecek apakah data kosong
             return response()->json([

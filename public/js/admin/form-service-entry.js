@@ -9,7 +9,7 @@ $(document).ready(function () {
     }
 
     // Form submit handler
-    $('#service-entry-form').on('submit', function (e) {
+    $('#service-entry-form').on('submit', async function (e) {
         e.preventDefault();
 
         // Tampilkan spinner
@@ -29,6 +29,41 @@ $(document).ready(function () {
         // Add _method field for Laravel to handle PUT requests
         if (mode === 'edit') {
             formData.append('_method', 'PUT');
+
+            const status = formData.get('status');
+            const harga = parseInt(formData.get('harga'), 10);
+            const createdAt = formData.get('created_at');
+
+            if (status === 'Selesai' && harga && createdAt) {
+                try {
+                    const createdDate = new Date(createdAt);
+                    const now = new Date();
+                    const durasi_hari = Math.max(1, Math.ceil((now - createdDate) / (1000 * 60 * 60 * 24))); // hindari 0 hari
+
+                    const predictionResponse = await fetch('https://glo-prediction.domcloud.dev/predict', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            harga: harga,
+                            durasi_hari: durasi_hari
+                        })
+                    });
+
+                    const predictionData = await predictionResponse.json();
+
+                    if (predictionResponse.ok) {
+                        formData.append('prediksi', predictionData.prediksi_hari_kunjungan);
+                    } else {
+                        throw new Error(predictionData?.message || 'Gagal memuat prediksi');
+                    }
+                } catch (error) {
+                    hideSubmitSpinner('submit-button', 'spinner');
+                    showDialog('dialog-error', 'Gagal memuat prediksi kunjungan: ' + error.message);
+                    return;
+                }
+            }
         }
 
         // Kirim request AJAX
@@ -72,6 +107,8 @@ $(document).ready(function () {
                     $('#nomor_whatsapp').val(response.data.nomor_whatsapp || '');
                     $('#harga').val(response.data.harga || '');
                     $('#keterangan').val(response.data.keterangan || '');
+                    console.log(response.data.created_at || '');
+                    $('#created_at').val(response.data.created_at || '')
 
                     // Ambil sudah_bayar dari response
                     sudahBayar = response.data.sudah_bayar;

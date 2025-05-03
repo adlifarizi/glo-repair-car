@@ -81,6 +81,9 @@
                             class="w-full border border-gray-300 rounded-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">{{ old('keterangan', '') }}</textarea>
                     </div>
 
+                    <!-- Hidden created at -->
+                     <input class="hidden" name="created_at" id="created_at"></input>
+
                     {{-- STATUS SERVIS (hanya saat edit) --}}
                     @if($mode === 'edit')
                         <div class="grid md:grid-cols-[130px_1fr] grid-cols-1 md:items-start mb-6 gap-2 md:gap-4">
