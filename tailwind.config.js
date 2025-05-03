@@ -28,6 +28,7 @@ export default {
         'my-2',
         'mx-4',
         'relative',
+        'cursor-not-allowed',
     ],
     theme: {
         extend: {

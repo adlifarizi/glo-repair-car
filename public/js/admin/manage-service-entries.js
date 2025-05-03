@@ -32,8 +32,10 @@ function loadData() {
                                 <a href="/ubah-entri-servis/${item.id}" class="text-blue-500 hover:underline">Ubah</a><br>
                                 <button class="text-red-500 hover:underline" onclick="confirmDelete(${item.id})">Hapus</button><br>
                                 <button 
-                                    class="text-orange-500 hover:underline" 
-                                    onclick="ingatkanPelanggan('${item.nomor_whatsapp}', '${tanggalPrediksi}', '${item.nama_pelanggan}')">
+                                    class="${tanggalPrediksi ? 'text-orange-500 hover:underline' : 'text-gray-400 cursor-not-allowed'}" 
+                                    onclick="${tanggalPrediksi ? `ingatkanPelanggan('${item.nomor_whatsapp}', '${tanggalPrediksi}', '${item.nama_pelanggan}')` : ''}"
+                                    ${!tanggalPrediksi ? 'disabled' : ''}
+                                >
                                     Ingatkan Pelanggan
                                 </button>
                             </td>
