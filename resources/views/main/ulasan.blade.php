@@ -63,7 +63,7 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <input type="text" name="nama_pelanggan" placeholder="Nama"
                             class="border border-gray-300 rounded p-2 w-full" required>
-                        <input type="text" name="plat_no" placeholder="Nomor Plat Kendaraan yang Pernah Diservis"
+                        <input type="text" maxlength="20" name="plat_no" placeholder="Nomor Plat Kendaraan yang Pernah Diservis"
                             class="border border-gray-300 rounded p-2 w-full" required>
                     </div>
 
