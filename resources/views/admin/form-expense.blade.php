@@ -36,7 +36,7 @@
                             <div class="flex">
                                 <span
                                     class="inline-flex items-center px-3 bg-red-100 text-red-500 border border-r-0 border-gray-300 rounded-l-md text-sm">Rp</span>
-                                <input type="number" name="nominal" id="nominal" oninput="this.value = this.value.slice(0, 9)"
+                                <input type="number" name="nominal" id="nominal" oninput="validateNominal(this)"
                                     value="{{ old('nominal', '') }}" placeholder="nominal pengeluaran"
                                     class="w-full border border-gray-300 rounded-r-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
                             </div>
@@ -99,4 +99,6 @@
     </script>
 
     <script src="{{ asset('js/admin/form-expense.js') }}" defer></script>
+    <script src="{{ asset('js/admin/validate_nominal.js') }}"></script>
+
 @endsection

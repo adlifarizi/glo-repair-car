@@ -67,7 +67,7 @@
                             <div class="flex">
                                 <span
                                     class="inline-flex items-center px-3 bg-red-100 text-red-500 border border-r-0 border-gray-300 rounded-l-md text-sm">Rp</span>
-                                <input type="number" name="harga" id="harga" oninput="this.value = this.value.slice(0, 9)"
+                                <input type="number" name="harga" id="harga" oninput="validateNominal(this)"
                                     value="{{ old('harga', '') }}" placeholder="Nominal"
                                     class="w-full border border-gray-300 rounded-r-md px-4 py-2 focus:ring-gray-500 focus:ring-1 ring-inset focus:outline-none">
                             </div>
@@ -139,7 +139,7 @@
                     <input type="hidden" name="id_servis" id="id_servis" value="">
                     <div class="mb-4">
                         <label for="nominal" class="block text-gray-700">Nominal</label>
-                        <input type="number" id="nominal" name="nominal" class="w-full p-2 border border-gray-300 rounded" required>
+                        <input type="number" id="nominal" oninput="validateNominal(this)" name="nominal" class="w-full p-2 border border-gray-300 rounded" required>
                     </div>
                     <div class="mb-4">
                         <label for="keterangan" class="block text-gray-700">Keterangan</label>
@@ -169,6 +169,8 @@
     </script>
 
     <script src="{{ asset('js/admin/form-service-entry.js') }}" defer></script>
+    <script src="{{ asset('js/admin/validate_nominal.js') }}"></script>
+
 
     <style>
         .btn-disabled {
