@@ -40,7 +40,7 @@ function loadData() {
                                 </button>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.plat_no}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">${item.nama_pelanggan}</td>
+                            <td class="px-6 py-4 max-w-xs break-words">${item.nama_pelanggan}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.nomor_whatsapp}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.status}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
