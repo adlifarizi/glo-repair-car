@@ -133,32 +133,41 @@ $(document).ready(function () {
     // Fetch contact information from API
     function fetchContactData() {
         isContactLoading = true;
-
+    
         $.ajax({
             url: '/api/kontak',
             type: 'GET',
             contentType: 'application/json',
             success: function (response) {
                 if (response && response.data) {
-                    // Extract contact data
-                    const email = response.data.email || 'belum ada email';
-                    fetchedPhone = response.data.nomor_telepon || response.data.nomor_whatsapp || 'belum ada nomor telepon';
-
+                    const email = response.data.email ?? 'belum ada email';
+                    fetchedPhone = response.data.nomor_telepon ?? response.data.nomor_whatsapp ?? 'belum ada nomor telepon';
+                    const instagram = response.data.instagram ?? 'belum ada Instagram';
+    
                     $('.contact-email').text(email);
                     $('.contact-phone').text(fetchedPhone);
+    
+                    if (instagram && instagram !== 'belum ada Instagram') {
+                        const isUrl = instagram.startsWith('http://') || instagram.startsWith('https://');
+                        const igLink = isUrl ? instagram : `https://instagram.com/${instagram}`;
+                        const igDisplay = isUrl ? instagram.replace(/^https?:\/\/(www\.)?instagram\.com\//, '@') : `@${instagram}`;
+                        $('.contact-instagram').html(`<a href="${igLink}" target="_blank" class="text-white underline hover:opacity-80">${igDisplay}</a>`);
+                    } else {
+                        $('.contact-instagram').text(instagram);
+                    }
                 }
-
+    
                 isContactLoading = false;
                 checkAndRemoveLoadingEffects();
             },
             error: function (xhr) {
                 console.error('Error fetching contact data:', xhr);
-
                 isContactLoading = false;
                 checkAndRemoveLoadingEffects();
             }
         });
     }
+    
 
     // Update marker popup with contact information
     function updateMarkerPopup(city, address, phone = null) {
