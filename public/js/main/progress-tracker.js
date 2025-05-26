@@ -86,6 +86,18 @@ $(document).ready(function () {
                         <p class="text-gray-700">Tanggal Servis</p><p>:</p><p>${formatDate(current.created_at)}</p>
                         <p class="text-gray-700">Detail Servis</p><p>:</p><p>${current.keterangan || 'Menunggu pemeriksaan'}</p>
                         <p class="text-gray-700">Estimasi Biaya</p><p>:</p><p>Rp${formatRupiah(current.harga)}</p>
+                        ${!isNaN(parseInt(current.prediksi)) ? (() => {
+                            const createdAt = new Date(current.created_at);
+                            createdAt.setDate(createdAt.getDate() + parseInt(current.prediksi));
+                            const tanggalPrediksi = createdAt.toLocaleDateString('id-ID', {
+                                day: '2-digit',
+                                month: 'long',
+                                year: 'numeric'
+                            });
+                            return `
+                                <p class="text-gray-700">Prediksi Kembali</p><p>:</p><p>${tanggalPrediksi}</p>
+                            `;
+                        })() : ''}
                     </div>
                 `);
 
@@ -99,6 +111,18 @@ $(document).ready(function () {
                             <p class="text-gray-700">Tanggal Servis</p><p>:</p><p>${formatDate(item.created_at)}</p>
                             <p class="text-gray-700">Detail Servis</p><p>:</p><p>${item.keterangan || 'Tanpa keterangan'}</p>
                             <p class="text-gray-700">Biaya</p><p>:</p><p>Rp${formatRupiah(item.harga)}</p>
+                            ${!isNaN(parseInt(item.prediksi)) ? (() => {
+                                const createdAt = new Date(item.created_at);
+                                createdAt.setDate(createdAt.getDate() + parseInt(item.prediksi));
+                                const tanggalPrediksi = createdAt.toLocaleDateString('id-ID', {
+                                    day: '2-digit',
+                                    month: 'long',
+                                    year: 'numeric'
+                                });
+                                return `
+                                    <p class="text-gray-700">Prediksi Kembali</p><p>:</p><p>${tanggalPrediksi}</p>
+                                `;
+                            })() : ''}
                         </div>
                         <div class="flex justify-between items-center mt-4">
                             <button id="prev_btn" class="px-4 py-2 bg-gray-200 text-gray-700 rounded" ${index === 0 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left"></i></button>
