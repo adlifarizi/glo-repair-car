@@ -59,6 +59,7 @@
                     <thead class="bg-white">
                         <tr>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Tindakan</th>
+                            <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Tanggal Masuk</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Plat Nomor</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Nama Pelanggan</th>
                             <th class="px-6 py-3 text-left text-lg font-medium text-gray-800 whitespace-nowrap">Nomor Whatsapp</th>

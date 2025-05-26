@@ -2,7 +2,7 @@ $(document).ready(function () {
     let sudahBayar = false;
     let idServis = 0;
     let platNoServis = '';
-    let nominalServis = 0;
+    let createdAtServis = '';
 
     if (mode === 'edit' && serviceEntryId) {
         loadDataById(serviceEntryId);
@@ -113,7 +113,7 @@ $(document).ready(function () {
                     sudahBayar = response.data.sudah_bayar;
                     idServis = response.data.id
                     platNoServis = response.data.plat_no
-                    nominalServis = response.data.harga
+                    createdAtServis = response.data.created_at;
 
                     if (mode === 'edit') {
                         const status = response.data.status;
@@ -193,8 +193,8 @@ $(document).ready(function () {
     // Fungsi untuk membuka modal
     function openModal() {
         $('#id_servis').val(idServis);
-        $('#keterangan_modal').val(`Pemasukan dari entri servis dengan plat no: ${platNoServis}`);
-        $('#nominal').val(nominalServis);
+        $('#keterangan_modal').val(`Pemasukan dari entri servis\nPlat No: ${platNoServis}\nTanggal Mulai Servis: ${formatDate(createdAtServis)}`);
+        $('#nominal').val($('#harga').val());
         const today = new Date().toISOString().split('T')[0]; // Format YYYY-MM-DD
         $('#tanggal_pemasukan').val(today);
 
@@ -209,6 +209,12 @@ $(document).ready(function () {
         $('#modal-pemasukan')
             .removeClass('flex')
             .addClass('hidden');
+    }
+
+    function formatDate(dateString) {
+        const options = { day: '2-digit', month: 'long', year: 'numeric' };
+        const date = new Date(dateString);
+        return date.toLocaleDateString('id-ID', options);
     }
 
     // Fungsi untuk mengirimkan data via AJAX

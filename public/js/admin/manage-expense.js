@@ -21,7 +21,7 @@ function loadData() {
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.nominal)}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${formatDate(item.tanggal_pengeluaran)}</td>
-                            <td class="px-6 py-4 max-w-xs break-words">${item.keterangan ?? ''}</td>
+                            <td class="px-6 py-4 max-w-xs break-words whitespace-pre-line">${item.keterangan ?? ''}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 ${item.bukti_pengeluaran
                             ? `<a href="${item.bukti_pengeluaran}" target="_blank" class="text-blue-500 hover:underline">Preview</a>`

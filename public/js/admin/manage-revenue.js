@@ -13,6 +13,7 @@ function loadData() {
 
                 // Loop through data and append rows to table
                 response.data.forEach(function (item) {
+                    console.log(item)
                     var row = `
                         <tr class="odd:bg-white even:bg-gray-200">
                             <td class="px-6 py-4 whitespace-nowrap">
@@ -22,7 +23,7 @@ function loadData() {
                             <td class="px-6 py-4 whitespace-nowrap">${item.id_servis}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.nominal)}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${formatDate(item.tanggal_pemasukan)}</td>
-                            <td class="px-6 py-4 max-w-xs break-words ">${item.keterangan ?? ''}</td>
+                            <td class="px-6 py-4 max-w-xs break-words whitespace-pre-line">${item.keterangan ?? ''}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
                                 ${item.bukti_pemasukan
                             ? `<a href="${item.bukti_pemasukan}" target="_blank" class="text-blue-500 hover:underline">Preview</a>`

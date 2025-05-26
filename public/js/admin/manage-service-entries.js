@@ -29,7 +29,10 @@ function loadData() {
                     var row = `
                         <tr class="odd:bg-white even:bg-gray-200">
                             <td class="px-6 py-4 whitespace-nowrap">
-                                <a href="/ubah-entri-servis/${item.id}" class="text-blue-500 hover:underline">Ubah</a><br>
+                                ${item.status === 'Selesai' && item.sudah_dibayar
+                                    ? `<span class="text-gray-400 cursor-not-allowed">Ubah</span>`
+                                    : `<a href="/ubah-entri-servis/${item.id}" class="text-blue-500 hover:underline">Ubah</a>`
+                                }<br>
                                 <button class="text-red-500 hover:underline" onclick="confirmDelete(${item.id})">Hapus</button><br>
                                 <button 
                                     class="${tanggalPrediksi ? 'text-orange-500 hover:underline' : 'text-gray-400 cursor-not-allowed'}" 
@@ -39,6 +42,7 @@ function loadData() {
                                     Ingatkan Pelanggan
                                 </button>
                             </td>
+                            <td class="px-6 py-4 whitespace-nowrap">${formatDate(item.created_at)}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.plat_no}</td>
                             <td class="px-6 py-4 max-w-xs break-words">${item.nama_pelanggan}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${item.nomor_whatsapp}</td>
@@ -48,7 +52,7 @@ function loadData() {
                                     ${item.sudah_dibayar === true ? 'Sudah dibayar' : 'Belum dibayar'}
                                 </span>
                             </td>
-                            <td class="px-6 py-4 max-w-xs break-words">${item.keterangan ?? ''}</td>
+                            <td class="px-6 py-4 max-w-xs break-words whitespace-pre-line">${item.keterangan ?? ''}</td>
                             <td class="px-6 py-4 whitespace-nowrap">Rp${formatNumber(item.harga)}</td>
                             <td class="px-6 py-4 whitespace-nowrap">${tanggalPrediksi}</td>
                         </tr>
@@ -114,6 +118,12 @@ function confirmDelete(id) {
 // Helper function to format number (currency format)
 function formatNumber(num) {
     return new Intl.NumberFormat('id-ID').format(num);
+}
+
+function formatDate(dateString) {
+    const options = { day: '2-digit', month: 'long', year: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('id-ID', options);
 }
 
 $(document).ready(function () {
