@@ -53,7 +53,7 @@
     ```
 Aplikasi akan berjalan di `http://localhost:8000`.
 
-## <img src="https://raw.githubusercontent.com/adlifarizi/glo-repair-car/main/public/icons/ipaws.svg" alt="iPaws" width="20" style="vertical-align: middle; margin-right: 6px;" /> By iPaws
+## 👥 Tim
 - Glorian Beda – Scrum Master
 - Adli Farizi – Developer
 - Icha Maulidya – System Analyst

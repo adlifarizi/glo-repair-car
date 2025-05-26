@@ -107,7 +107,6 @@ $(document).ready(function () {
                     $('#nomor_whatsapp').val(response.data.nomor_whatsapp || '');
                     $('#harga').val(response.data.harga || '');
                     $('#keterangan').val(response.data.keterangan || '');
-                    console.log(response.data.created_at || '');
                     $('#created_at').val(response.data.created_at || '')
 
                     // Ambil sudah_bayar dari response
@@ -119,6 +118,13 @@ $(document).ready(function () {
                     if (mode === 'edit') {
                         const status = response.data.status;
                         $(`input[name="status"][value="${status}"]`).prop('checked', true);
+
+                        // Jika status "Selesai", disable semua radio status agar tidak bisa diubah
+                        if (status === 'Selesai') {
+                            $('input[name="status"]').prop('disabled', true);
+                        } else {
+                            $('input[name="status"]').prop('disabled', false);
+                        }
                     }
 
                     // Update tombol berdasarkan status dan sudah_bayar
